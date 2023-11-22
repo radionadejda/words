@@ -1,8 +1,9 @@
-# React + Vite
+this is an app that uses cards to facilitate learning new words
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+this is a work in progress so i'll use readme for notes to self
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+notes to self!  
+fix h1 vertical padding  
+make flipcard  
+make routes  
+remove cheat screenshot from src  
