@@ -3,7 +3,7 @@ import '../styles/_ListPage.scss';
 import { WordList } from '../components/WordList/WordList.jsx';
 import { Button } from '../components/Button/Button.jsx';
 
-import { words } from '../data/data.js';
+import words from '../data/data.json';
 
 export function ListPage() {
     return (
