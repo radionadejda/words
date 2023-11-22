@@ -1,0 +1,10 @@
+@import '../../styles/vars';
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($accent1, 0.2);
+    color: $text;
+}

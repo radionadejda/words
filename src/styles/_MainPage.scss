@@ -1,0 +1,63 @@
+@import './vars';
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5% 5%;
+    height: 100%;
+}
+
+.title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 2% auto;
+    color: $text;
+}
+
+.blocks {
+    display: flex;
+    gap: 5%;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+
+    @media screen and (max-width: 576px) {
+        flex-direction: column;
+    }
+}
+
+.block {
+    height: 80%;
+    max-width: 50%;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 2% 6%;
+    background-color: $accent1;
+    border: 1px solid $accent2;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    color: $text;
+    text-decoration: none;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: bolder;
+    &:hover {
+        background-color: $accent2;
+        transform: translateY(-3px);
+        transition: 0.5s;
+    }
+    &:focus,
+    &:active {
+        background-color: $accent2;
+    }
+    @media (max-width: 576px) {
+        height: 50%;
+    }
+}

@@ -1,0 +1,15 @@
+@import '../../styles/vars';
+
+.button {
+    padding: 2% 6%;
+    background-color: $accent1;
+    border: 1px solid $accent2;
+    border-radius: 1rem;
+    color: $text;
+    &:hover,
+    &:focus,
+    &:active {
+        transition: 0.5s;
+        background-color: $accent2;
+    }
+}

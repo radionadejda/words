@@ -1,0 +1,50 @@
+@import '../../styles/vars';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba($accent1, 0.2);
+    padding: 0 5%;
+    color: $text;
+}
+
+.header__link {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 2%;
+    border-radius: 1rem;
+    text-decoration: none;
+    &:hover {
+        transition: all 0.3s ease;
+        background-color: $accent2;
+    }
+}
+
+.header__nav {
+    display: flex;
+    gap: 5%;
+    justify-content: flex-end;
+    list-style-type: none;
+    width: 50%;
+}
+
+.nav__item {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2% 6%;
+    background-color: $accent1;
+    border: 1px solid $accent2;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    &:hover {
+        transform: translateY(-3px);
+        transition: 0.5s;
+    }
+    &:focus,
+    &:active {
+        background-color: $accent2;
+    }
+}
