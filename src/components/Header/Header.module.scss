@@ -24,9 +24,10 @@
     text-decoration: none;
     width: fit-content;
     margin: 0 2%;
+    color: $text;
     &:hover {
         transition: all 0.3s ease;
-        background-color: $accent2;
+        background-color: rgba($accent1, 0.5);
     }
 }
 

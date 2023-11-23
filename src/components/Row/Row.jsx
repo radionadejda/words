@@ -18,13 +18,13 @@ export function Row(props) {
                 {isHeading ? (
                     // Custom buttons for the heading row
                     <>
-                        <Button name="Add" />
+                        <Button name="add" />
                     </>
                 ) : (
                     // Default buttons for other rows
                     <>
-                        <Button name="Edit" />
-                        <Button name="Delete" />
+                        <Button name="edit" />
+                        <Button name="delete" />
                     </>
                 )}
             </div>
