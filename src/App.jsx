@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 //будет главная, на ней пока только англ, и выбор переход к карточкам или к таблице. когда-нибудь мб сделать выбор разных языков, мб карточки и таблица будут на одной странице и сделать по странице для каждого языка. совсем эпик было бы сделать чтобы страница с тренингом была одна и отрисовывалась по массиву в зависимости от того, что выбрано на главной (или в переключателе в хедере). как сделать передачу вбранного с одной страницы на другую?
 
-import './styles/_App.scss';
+import styles from './styles/App.module.scss';
 
 // пока не разобралась с роутингом, переключаем страницы за- и рас- комментированием
 import { MainPage } from './pages/MainPage';
@@ -21,11 +21,11 @@ import { Footer } from './components/Footer/Footer';
 
 function App() {
     return (
-        <div className="App">
+        <div className={styles.App}>
             <Header />
             {/* <MainPage /> */}
             <ListPage />
-            {/* <CardPage /> */}
+            <CardPage />
             {/* <NotFoundPage /> */}
             <Footer />
         </div>

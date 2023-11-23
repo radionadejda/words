@@ -9,12 +9,21 @@
     color: $text;
 }
 
+.title {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: fit-content;
+}
+
 .header__link {
     text-transform: uppercase;
     font-weight: bold;
     padding: 2%;
     border-radius: 1rem;
     text-decoration: none;
+    width: fit-content;
+    margin: 0 2%;
     &:hover {
         transition: all 0.3s ease;
         background-color: $accent2;
@@ -30,7 +39,7 @@
 }
 
 .nav__item {
-    width: 30%;
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,6 +48,7 @@
     border: 1px solid $accent2;
     border-radius: 1rem;
     transition: all 0.3s ease;
+    cursor: pointer;
     &:hover {
         transform: translateY(-3px);
         transition: 0.5s;

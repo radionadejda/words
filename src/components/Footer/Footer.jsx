@@ -1,10 +1,10 @@
-import './_Footer.scss';
+import styles from './Footer.module.scss';
 
 export function Footer() {
     return (
-        <div className="footer">
+        <div className={styles.footer}>
             <p>
-                <a href="https://github.com/radionadejda" className="footer__link">
+                <a href="https://github.com/radionadejda" className={styles.footer__link}>
                     radionadejda
                 </a>{' '}
                 made me

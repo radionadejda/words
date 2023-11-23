@@ -1,4 +1,4 @@
-import './_Header.scss';
+import styles from './Header.module.scss';
 
 // maybe add theme switcher into header__nav
 
@@ -13,13 +13,13 @@ import './_Header.scss';
 
 export function Header() {
     return (
-        <div className="header">
-            <a href="../../pages/MainPage.jsx" className="header__link">
-                <h1 className="title">another learning app</h1>
+        <div className={styles.header}>
+            <a href="../../pages/MainPage.jsx" className={styles.header__link}>
+                <h1 className={styles.title}>another learning app</h1>
             </a>
-            <ul className="header__nav">
-                <li className="nav__item">cards</li>
-                <li className="nav__item">word list</li>
+            <ul className={styles.header__nav}>
+                <li className={styles.nav__item}>cards</li>
+                <li className={styles.nav__item}>word list</li>
             </ul>
         </div>
     );

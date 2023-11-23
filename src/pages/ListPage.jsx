@@ -1,26 +1,40 @@
-import '../styles/_ListPage.scss';
+import styles from '../styles/ListPage.module.scss';
+import stylesRow from '../components/Row/Row.module.scss';
 
-import { WordList } from '../components/WordList/WordList.jsx';
+import { Row } from '../components/Row/Row.jsx';
 import { Button } from '../components/Button/Button.jsx';
 
 import words from '../data/data.json';
 
+// export function ListPage() {
+//     return (
+//         <div className={styles.WordList}>
+//             <div className={`${stylesRow.row} ${stylesRow.nohover}`}>
+//                 <h2 className={stylesRow.word}>слово</h2>
+//                 <div className={stylesRow.description}>
+//                     <div className={stylesRow.text}>транскрипция</div>
+//                     <div className={stylesRow.text}>перевод</div>
+//                     <div className={stylesRow.text}>теги</div>
+//                 </div>
+//                 <div className={stylesRow.edit}>
+//                     <Button name="Add" />
+//                 </div>
+//             </div>
+//             {words.map((word, id) => (
+//                 <Row key={id} word={word} />
+//             ))}
+//         </div>
+//     );
+// }
+
 export function ListPage() {
+    const heading = { id: 'heading', english: 'слово', transcription: 'транскрипция', russian: 'перевод', tags: 'теги' };
+
     return (
-        <div className="WordList">
-            <div className="row nohover">
-                <h2 className="word">слово</h2>
-                <div className="description">
-                    <div className="text">транскрипция</div>
-                    <div className="text">перевод</div>
-                    <div className="text">теги</div>
-                </div>
-                <div className="edit">
-                    <Button name="Add" />
-                </div>
-            </div>
+        <div className={styles.WordList}>
+            <Row word={heading} isHeading={true} />
             {words.map((word, id) => (
-                <WordList key={id} word={word} />
+                <Row key={id} word={word} />
             ))}
         </div>
     );
