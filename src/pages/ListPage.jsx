@@ -28,7 +28,7 @@ import words from '../data/data.json';
 // }
 
 export function ListPage() {
-    const heading = { id: 'heading', english: 'слово', transcription: 'транскрипция', russian: 'перевод', tags: 'теги' };
+    const heading = { english: 'word', transcription: 'transcription', russian: 'translation', tags: 'tags' };
 
     return (
         <div className={styles.WordList}>

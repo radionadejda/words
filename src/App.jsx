@@ -24,7 +24,7 @@ function App() {
         <div className={styles.App}>
             <Header />
             {/* <MainPage /> */}
-            <ListPage />
+            {/* <ListPage /> */}
             <CardPage />
             {/* <NotFoundPage /> */}
             <Footer />
