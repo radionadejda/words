@@ -1,4 +1,4 @@
-import styles from '../styles/MainPage.module.scss';
+import styles from '../../styles/HomePage.module.scss';
 
 // import { Button } from '../components/Button/Button.jsx';
 // import { words } from '../data/data.js';

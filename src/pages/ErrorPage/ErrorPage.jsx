@@ -1,6 +1,6 @@
 // import '../styles/_App.scss';
-import styles from '../styles/NotFoundPage.module.scss';
+import styles from '../../styles/ErrorPage.module.scss';
 
-export function NotFoundPage() {
+export function ErrorPage() {
     return <div className={styles.div}>you're lost, little girl</div>;
 }
