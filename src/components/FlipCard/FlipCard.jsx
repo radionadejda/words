@@ -23,7 +23,7 @@ export function FlipCard(props) {
                 <h2 className={styles.word}>{english}</h2>
                 <div className={styles.text}>{transcription}</div>
                 <div className={styles.answer}>
-                    <div className={styles.translation}>{russian}</div>
+                    <div className={styles.answer_text}>{russian}</div>
                     <div className={styles.hint}>click card to hide answer</div>
                 </div>
             </div>

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Card } from '../../components/Card/Card.jsx';
 // import { FlipCard } from '../../components/FlipCard/FlipCard.jsx';
-// FlipCard looks better but doesn't use required state and props.
+// FlipCard looks better but doesn't use state as required.
 // To see also need to change Card into FlipCard in return
 import words from '../../data/data.json';
 import styles from '../../styles/CardsPage.module.scss';
 
-export function CardsPage() {
+export function CardsPage({ stateWords }) {
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const wordsCount = words.length;
 
@@ -24,7 +24,7 @@ export function CardsPage() {
             <button id="prevButton" className={styles.arrow} onClick={goToPreviousCard}>
                 ‹
             </button>
-            <Card key={currentWordIndex} word={currentWord} />
+            <Card key={currentWordIndex} word={stateWords.words[currentWordIndex]} />
             <button id="nextButton" className={styles.arrow} onClick={goToNextCard}>
                 ›
             </button>
