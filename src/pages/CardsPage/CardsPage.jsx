@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styles from '../../styles/CardsPage.module.scss';
 import { Card } from '../../components/Card/Card.jsx';
-import { Button } from '../../components/Button/Button.jsx';
+// import { FlipCard } from '../../components/FlipCard/FlipCard.jsx';
+// FlipCard looks better but doesn't use required state and props.
+// To see also need to change Card into FlipCard in return
 import words from '../../data/data.json';
 
 export function CardsPage() {
@@ -22,9 +24,7 @@ export function CardsPage() {
             <button id="prevButton" className={styles.arrow} onClick={goToPreviousCard}>
                 ‹
             </button>
-            {/* <Button id="prevButton" name="prev" onClick={goToPreviousCard} /> */}
             <Card key={currentWordIndex} word={currentWord} />
-            {/* <Button id="nextButton" name="next" onClick={goToNextCard} /> */}
             <button id="nextButton" className={styles.arrow} onClick={goToNextCard}>
                 ›
             </button>

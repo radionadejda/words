@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 60vw;
     height: 40vh;
     border: 1px solid $accent2;
     border-radius: 1rem;
@@ -13,6 +13,11 @@
     background: linear-gradient(150deg, rgba($accent2, 1) 0%, rgba($accent1, 1) 100%);
     color: $text;
     margin: 0 2vw;
+}
+
+.card_back {
+    background: $accent1;
+    background: linear-gradient(150deg, rgba($accent1, 1) 0%, rgba($accent2, 1) 100%);
 }
 
 .answer_button {
@@ -35,6 +40,11 @@
 .word {
     color: $text;
     font-size: 2rem;
+}
+.hint {
+    margin-top: 2%;
+    font-size: 0.8rem;
+    color: $shadow;
 }
 
 .answer_text {

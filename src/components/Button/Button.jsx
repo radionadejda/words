@@ -1,6 +1,8 @@
 import styles from './Button.module.scss';
 
 export function Button(props) {
+    const buttonClass = `${styles.button} ${props.customClass || ''}`;
+
     const handleClick = () => {
         if (props.onClick) {
             props.onClick();
@@ -8,7 +10,7 @@ export function Button(props) {
     };
 
     return (
-        <button className={`${styles.button} ${props.name}`} onClick={handleClick}>
+        <button className={buttonClass} onClick={handleClick}>
             {props.name}
         </button>
     );
