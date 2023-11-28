@@ -1,1 +1,9 @@
-[]
+[
+    { "id": "14836", "english": "content", "transcription": "[ ˈkɒntɛnt ]", "russian": "удовлетворенный", "tags": "", "tags_json": "[\"\"]" },
+    { "id": "14841", "english": "blusher", "transcription": "[ ˈblʌʃər ]", "russian": "румяна", "tags": "cosmetics", "tags_json": "[\"cosmetics\"]" },
+    { "id": "14844", "english": "curious", "transcription": "[ ˈkjʊərɪəs ]", "russian": "любопытный", "tags": "emotions", "tags_json": "[\"emotions\"]" },
+    { "id": "14848", "english": "judge", "transcription": "[ dʒʌdʒ ]", "russian": "судья", "tags": "professions", "tags_json": "[\"professions\"]" },
+    { "id": "14850", "english": "gardener", "transcription": "[ ˈɡɑːrdnər ]", "russian": "садовник", "tags": "professions", "tags_json": "[\"professions\"]" },
+    { "id": "14852", "english": "wine", "transcription": "[ waɪn ]", "russian": "вино", "tags": "drinks", "tags_json": "[\"drinks\"]" },
+    { "id": "14854", "english": "sleepy", "transcription": "[ ˈsliːpi ]", "russian": "сонный", "tags": "emotions", "tags_json": "[\"emotions\"]" }
+]
