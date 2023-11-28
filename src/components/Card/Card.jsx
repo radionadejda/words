@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styles from './Card.module.scss';
 import { Button } from '../Button/Button';
+import styles from './Card.module.scss';
 
 export function Card(props) {
     const { english, transcription, russian } = props.word;

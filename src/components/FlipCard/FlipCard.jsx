@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import styles from './FlipCard.module.scss';
-import { Button } from '../Button/Button';
+import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
+import styles from './FlipCard.module.scss';
 
 export function FlipCard(props) {
     const { english, transcription, russian } = props.word;

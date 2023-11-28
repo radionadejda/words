@@ -1,6 +1,5 @@
-import styles from './Row.module.scss';
-
 import { Button } from '../Button/Button';
+import styles from './Row.module.scss';
 
 export function Row(props) {
     const { english, transcription, russian, tags } = props.word;

@@ -1,20 +1,19 @@
+import { NavLink } from 'react-router-dom';
+
 import styles from '../../styles/HomePage.module.scss';
 
-// import { Button } from '../components/Button/Button.jsx';
-// import { words } from '../data/data.js';
-
-export function MainPage() {
+export function HomePage() {
     return (
-        <div className={styles.main}>
+        <main className={styles.main}>
             <h2 className={styles.title}>pick type of training</h2>
             <div className={styles.blocks}>
-                <a href="./CardPage.js" className={styles.block}>
+                <NavLink to="/cards" className={styles.block}>
                     <div>learn with cards</div>
-                </a>
-                <a href="./ListPage.js" className={styles.block}>
+                </NavLink>
+                <NavLink to="/list" className={styles.block}>
                     <div>check word list</div>
-                </a>
+                </NavLink>
             </div>
-        </div>
+        </main>
     );
 }

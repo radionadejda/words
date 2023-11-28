@@ -1,6 +1,6 @@
-import styles from '../../styles/ListPage.module.scss';
 import { Row } from '../../components/Row/Row';
 import words from '../../data/data.json';
+import styles from '../../styles/ListPage.module.scss';
 
 export function ListPage() {
     const heading = { english: 'word', transcription: 'transcription', russian: 'translation', tags: 'tags' };

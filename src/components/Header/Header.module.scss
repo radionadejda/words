@@ -5,7 +5,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: rgba($accent1, 0.2);
-    padding: 0 5%;
+    padding: 1% 5%;
     color: $text;
 }
 
@@ -45,7 +45,9 @@
     align-items: center;
     justify-content: center;
     padding: 2% 6%;
+    text-decoration: none;
     background-color: $accent1;
+    color: $text;
     border: 1px solid $accent2;
     border-radius: 1rem;
     transition: all 0.3s ease;
