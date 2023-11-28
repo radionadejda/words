@@ -25,6 +25,11 @@
     justify-content: space-around;
 }
 
+.text {
+    min-width: fit-content;
+    text-wrap: nowrap;
+}
+
 .edit {
     display: flex;
     justify-content: center;

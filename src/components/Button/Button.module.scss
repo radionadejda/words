@@ -6,6 +6,8 @@
     border-radius: 1rem;
     background-color: $shadow;
     color: $accent2;
+    min-width: fit-content;
+    text-wrap: nowrap;
     &:hover,
     &:focus,
     &:active {
