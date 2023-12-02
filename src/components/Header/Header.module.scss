@@ -21,14 +21,14 @@
     text-transform: uppercase;
     font-weight: bold;
     padding: 2%;
-    border-radius: 1rem;
+    border-radius: 0.3rem;
     text-decoration: none;
     width: fit-content;
     margin: 0 2%;
     color: $text;
     &:hover {
         transition: all 0.3s ease;
-        background-color: rgba($accent1, 0.5);
+        background-color: rgba($accent1, 0.1);
     }
 }
 
@@ -47,14 +47,14 @@
     justify-content: center;
     padding: 2% 6%;
     text-decoration: none;
-    background-color: $accent1;
+    background-color: $accent2;
     color: $text;
     border: 1px solid $accent2;
-    border-radius: 1rem;
+    border-radius: 0.3rem;
     transition: all 0.3s ease;
     cursor: pointer;
     &:hover {
-        transform: translateY(-3px);
+        background-color: $accent1;
         transition: 0.5s;
     }
     &:focus,

@@ -34,9 +34,9 @@
     align-items: center;
     justify-content: center;
     padding: 2% 6%;
-    background-color: $accent1;
-    border: 1px solid $accent2;
-    border-radius: 1rem;
+    background-color: rgba($accent1, 0.2);
+    border: 1px solid $accent1;
+    border-radius: 0.3rem;
     transition: all 0.3s ease;
     color: $text;
     text-decoration: none;
@@ -48,7 +48,6 @@
     margin: 1% auto;
     &:hover {
         background-color: $accent2;
-        transform: translateY(-3px);
         transition: 0.5s;
     }
     &:focus,

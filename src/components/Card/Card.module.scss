@@ -19,11 +19,11 @@
 
 .answer_button {
     padding: 5%;
-    background-color: $shadow;
+    background-color: $accent2;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 
     &:active {
-        background-color: $accent2;
+        background-color: $shadow;
     }
 }
 
