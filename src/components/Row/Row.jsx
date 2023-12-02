@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { Button } from '../Button/Button';
+import { FormAdd } from '../FormAdd/FormAdd';
+import { FormEdit } from '../FormEdit/FormEdit';
+import { FormRemove } from '../FormRemove/FormRemove';
 import styles from './Row.module.scss';
 
 export function Row(props) {
@@ -24,16 +27,12 @@ export function Row(props) {
         let template;
         switch (change) {
             case 'add':
-                template = `${change} word`;
-                return template;
+                return <FormAdd />;
             case 'edit':
-                template = `${change} word`;
-                return template;
+                return <FormEdit />;
             case 'remove':
-                template = `${change} word`;
-                return template;
+                return <FormRemove />;
             default:
-                console.log(change);
                 break;
         }
     };
