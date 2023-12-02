@@ -20,14 +20,16 @@ export function CardsPage({ stateWords }) {
 
     const currentWord = words[currentWordIndex];
     return (
-        <div className={styles.gallery}>
-            <button id="prevButton" className={styles.arrow} onClick={goToPreviousCard}>
-                ‹
-            </button>
-            <Card key={currentWordIndex} word={stateWords.words[currentWordIndex]} />
-            <button id="nextButton" className={styles.arrow} onClick={goToNextCard}>
-                ›
-            </button>
-        </div>
+        <main className={styles.main}>
+            <div className={styles.gallery}>
+                <button id="prevButton" className={styles.arrow} onClick={goToPreviousCard}>
+                    ‹
+                </button>
+                <Card key={currentWordIndex} word={stateWords.words[currentWordIndex]} />
+                <button id="nextButton" className={styles.arrow} onClick={goToNextCard}>
+                    ›
+                </button>
+            </div>
+        </main>
     );
 }

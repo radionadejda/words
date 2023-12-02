@@ -1,5 +1,9 @@
 import styles from '../../styles/ErrorPage.module.scss';
 
 export function ErrorPage() {
-    return <div className={styles.div}>you're lost, little girl</div>;
+    return (
+        <main className={styles.main}>
+            <div className={styles.div}>you're lost, little girl</div>
+        </main>
+    );
 }

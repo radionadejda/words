@@ -1,5 +1,9 @@
 @import './vars';
 
+.main {
+    @include main;
+}
+
 .gallery {
     display: flex;
     margin: 0 auto;

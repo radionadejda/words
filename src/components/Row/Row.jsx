@@ -6,7 +6,7 @@ export function Row(props) {
     const isHeading = props.isHeading || false;
 
     return (
-        <div className={`${styles.row} ${isHeading ? styles.nohover : ''}`}>
+        <div className={`${styles.row} ${isHeading ? styles.heading : ''}`}>
             <h2 className={styles.word}>{english}</h2>
             <div className={styles.description}>
                 <div className={styles.text}>{transcription}</div>

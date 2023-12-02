@@ -36,8 +36,7 @@
     gap: 2%;
 }
 
-.nohover {
-    &:hover {
-        background-color: $bg;
-    }
+.heading {
+    background-color: rgba($accent2, 0.5);
+    font-weight: bold;
 }

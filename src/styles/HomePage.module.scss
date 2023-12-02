@@ -1,12 +1,7 @@
 @import './vars';
 
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 5% 5%;
-    height: 100%;
+    @include main;
 }
 
 .title {
@@ -22,18 +17,18 @@
     gap: 5%;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    height: 100%;
     margin: 0 auto;
+    height: 100%;
 
     @media screen and (max-width: 576px) {
         flex-direction: column;
+        justify-content: space-between;
     }
 }
 
 .block {
-    height: 80%;
-    max-width: 50%;
+    width: 50%;
+    min-width: 30vw;
     display: flex;
     flex-shrink: 0;
     align-items: center;
@@ -48,6 +43,9 @@
     font-size: 2rem;
     text-transform: uppercase;
     font-weight: bolder;
+    height: 40vh;
+    text-wrap: wrap;
+    margin: 1% auto;
     &:hover {
         background-color: $accent2;
         transform: translateY(-3px);
@@ -58,6 +56,7 @@
         background-color: $accent2;
     }
     @media (max-width: 576px) {
-        height: 50%;
+        height: 25vh;
+        min-width: 50vw;
     }
 }

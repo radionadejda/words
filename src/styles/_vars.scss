@@ -8,3 +8,16 @@ $mobile: 576px;
 $medium: 768px;
 $large: 992px;
 $extralarge: 1200px;
+
+$header-height: 15vh;
+$footer-height: 15vh;
+$main-height: 70vh;
+
+@mixin main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5% 5%;
+    min-height: $main-height;
+}

@@ -16,10 +16,5 @@ $font: 'Roboto';
 .App {
     text-align: center;
     background-color: $bg;
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 15vh 70vh 15vh;
-}
-.main {
-    display: flex;
+    min-height: 100vh;
 }

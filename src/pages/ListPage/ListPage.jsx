@@ -4,11 +4,13 @@ import styles from '../../styles/ListPage.module.scss';
 export function ListPage({ stateWords }) {
     const heading = { english: 'word', transcription: 'transcription', russian: 'translation', tags: 'tags' };
     return (
-        <div className={styles.WordList}>
-            <Row word={heading} isHeading={true} />
-            {stateWords.words.map((word, id) => (
-                <Row key={id} word={word} />
-            ))}
-        </div>
+        <main className={styles.main}>
+            <div className={styles.WordList}>
+                <Row word={heading} isHeading={true} />
+                {stateWords.words.map((word, id) => (
+                    <Row key={id} word={word} />
+                ))}
+            </div>
+        </main>
     );
 }
