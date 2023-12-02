@@ -16,8 +16,8 @@ $main-height: 70vh;
 @mixin main {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    padding: 5% 5%;
+    padding: 2% 5%;
     min-height: $main-height;
 }
