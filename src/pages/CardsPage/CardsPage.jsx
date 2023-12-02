@@ -6,7 +6,7 @@ import { Card } from '../../components/Card/Card.jsx';
 import words from '../../data/data.json';
 import styles from '../../styles/CardsPage.module.scss';
 
-export function CardsPage({ stateWords }) {
+export const CardsPage = ({ stateWords }) => {
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const wordsCount = words.length;
 
@@ -22,14 +22,23 @@ export function CardsPage({ stateWords }) {
     return (
         <main className={styles.main}>
             <div className={styles.gallery}>
-                <button id="prevButton" className={styles.arrow} onClick={goToPreviousCard}>
+                <button
+                    id="prevButton"
+                    className={styles.arrow}
+                    onClick={goToPreviousCard}>
                     ‹
                 </button>
-                <Card key={currentWordIndex} word={stateWords.words[currentWordIndex]} />
-                <button id="nextButton" className={styles.arrow} onClick={goToNextCard}>
+                <Card
+                    key={currentWordIndex}
+                    word={stateWords.words[currentWordIndex]}
+                />
+                <button
+                    id="nextButton"
+                    className={styles.arrow}
+                    onClick={goToNextCard}>
                     ›
                 </button>
             </div>
         </main>
     );
-}
+};

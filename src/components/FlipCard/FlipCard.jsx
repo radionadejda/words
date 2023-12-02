@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import styles from './FlipCard.module.scss';
 
-export function FlipCard(props) {
+export const FlipCard = (props) => {
     const { english, transcription, russian } = props.word;
     const [showTranslation, setShowTranslation] = useState(false);
 
@@ -13,13 +13,19 @@ export function FlipCard(props) {
     };
 
     return (
-        <ReactCardFlip isFlipped={flip} flipDirection="vertical">
-            <div className={styles.card} onClick={() => setFlip(!flip)}>
+        <ReactCardFlip
+            isFlipped={flip}
+            flipDirection="vertical">
+            <div
+                className={styles.card}
+                onClick={() => setFlip(!flip)}>
                 <h2 className={styles.word}>{english}</h2>
                 <div className={styles.text}>{transcription}</div>
                 <div className={styles.hint}>click card to see answer</div>
             </div>
-            <div className={`${styles.card} ${styles.card_back}`} onClick={() => setFlip(!flip)}>
+            <div
+                className={`${styles.card} ${styles.card_back}`}
+                onClick={() => setFlip(!flip)}>
                 <h2 className={styles.word}>{english}</h2>
                 <div className={styles.text}>{transcription}</div>
                 <div className={styles.answer}>
@@ -29,4 +35,4 @@ export function FlipCard(props) {
             </div>
         </ReactCardFlip>
     );
-}
+};

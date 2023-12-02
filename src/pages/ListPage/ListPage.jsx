@@ -1,7 +1,7 @@
 import { Row } from '../../components/Row/Row';
 import styles from '../../styles/ListPage.module.scss';
 
-export function ListPage({ stateWords }) {
+export const ListPage = ({ stateWords }) => {
     const heading = { english: 'word', transcription: 'transcription', russian: 'translation', tags: 'tags' };
 
     return (
@@ -20,4 +20,4 @@ export function ListPage({ stateWords }) {
             </div>
         </main>
     );
-}
+};

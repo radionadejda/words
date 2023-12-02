@@ -2,7 +2,7 @@ import styles from './Spinner.module.scss';
 
 import React from 'react';
 
-export function Spinner() {
+export const Spinner = () => {
     return (
         <main className={styles.spinner}>
             <p>we're waiting for data, here's a cat</p>
@@ -13,4 +13,4 @@ export function Spinner() {
             />
         </main>
     );
-}
+};

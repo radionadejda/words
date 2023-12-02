@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Button } from '../Button/Button';
-import { FormAdd } from '../FormAdd/FormAdd';
-import { FormEdit } from '../FormEdit/FormEdit';
-import { FormRemove } from '../FormRemove/FormRemove';
+import { Form } from '../Form/Form';
 import styles from './Row.module.scss';
 
-export function Row(props) {
+export const Row = (props) => {
     const { english, transcription, russian, tags } = props.word;
     const isHeading = props.isHeading || false;
 
@@ -15,26 +13,20 @@ export function Row(props) {
     const [tagsValue, setTagsValue] = useState(tags);
 
     const [change, setChange] = useState(null);
+    const [showForm, setShowForm] = useState(false);
+
     const handleChange = (type) => {
-        if (change === type) {
-            setChange((change) => (change = null));
+        if (change === type && showForm) {
+            setShowForm(false);
         } else {
-            setChange((change) => (change = type));
+            setChange(type);
+            setShowForm(true);
         }
     };
 
-    const chooseSwitch = (change) => {
-        let template;
-        switch (change) {
-            case 'add':
-                return <FormAdd />;
-            case 'edit':
-                return <FormEdit />;
-            case 'remove':
-                return <FormRemove />;
-            default:
-                break;
-        }
+    const handleCloseForm = () => {
+        setChange(null);
+        setShowForm(false);
     };
 
     return (
@@ -66,7 +58,14 @@ export function Row(props) {
                     </div>
                 )}
             </div>
-            <div className={`${styles.change} ${change !== null ? '' : styles.hide}`}>{chooseSwitch(change)}</div>
+            <div className={styles.change}>
+                {showForm && (
+                    <Form
+                        onClose={handleCloseForm}
+                        mode={change}
+                    />
+                )}
+            </div>
         </div>
     );
-}
+};

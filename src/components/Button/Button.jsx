@@ -1,6 +1,6 @@
 import styles from './Button.module.scss';
 
-export function Button(props) {
+export const Button = (props) => {
     const buttonClass = `${styles.button} ${props.customClass || ''}`;
 
     const handleClick = () => {
@@ -10,8 +10,10 @@ export function Button(props) {
     };
 
     return (
-        <button className={buttonClass} onClick={handleClick}>
+        <button
+            className={buttonClass}
+            onClick={handleClick}>
             {props.name}
         </button>
     );
-}
+};

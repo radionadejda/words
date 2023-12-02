@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '../Button/Button';
 import styles from './Card.module.scss';
 
-export function Card(props) {
+export const Card = (props) => {
     const { english, transcription, russian } = props.word;
     const [showTranslation, setShowTranslation] = useState(false);
 
@@ -24,4 +24,4 @@ export function Card(props) {
             </div>
         </div>
     );
-}
+};
