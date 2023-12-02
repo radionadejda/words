@@ -13,20 +13,16 @@ export function Row(props) {
                 <div className={styles.text}>{russian}</div>
                 <div className={styles.text}>{tags}</div>
             </div>
-            <div className={styles.edit}>
-                {isHeading ? (
-                    // Custom buttons for the heading row
-                    <>
-                        <Button name="add" />
-                    </>
-                ) : (
-                    // Default buttons for other rows
-                    <>
-                        <Button name="edit" />
-                        <Button name="delete" />
-                    </>
-                )}
-            </div>
+            {isHeading ? (
+                <div className={styles.edit}>
+                    <Button name="add" />
+                </div>
+            ) : (
+                <div className={styles.edit}>
+                    <Button name="edit" />
+                    <Button name="delete" />
+                </div>
+            )}
         </div>
     );
 }
