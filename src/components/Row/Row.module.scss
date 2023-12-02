@@ -1,8 +1,12 @@
 @import '../../styles/vars';
 
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
 .row {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    display: flex;
     align-items: center;
     justify-content: center;
     height: min-content;
@@ -17,12 +21,13 @@
 
 .word {
     color: $text;
+    min-width: 25%;
 }
 
 .description {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    justify-content: space-around;
+    min-width: 55%;
     @media (max-width: $medium) {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr;
@@ -36,6 +41,7 @@
 
 .edit {
     display: flex;
+    min-width: 20%;
     justify-content: center;
     gap: 2%;
 }
@@ -47,4 +53,12 @@
 
 .hide {
     display: none;
+}
+
+.change {
+    background-color: $accent1;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    justify-content: stretch;
 }

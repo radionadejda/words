@@ -7,7 +7,7 @@ export function ListPage({ stateWords }) {
 
     return (
         <main className={styles.main}>
-            <div className={styles.WordList}>
+            <div className={styles.list}>
                 <Row
                     word={heading}
                     isHeading={true}
