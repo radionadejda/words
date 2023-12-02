@@ -7,7 +7,7 @@ export function Card(props) {
     const [showTranslation, setShowTranslation] = useState(false);
 
     const toggleTranslation = () => {
-        setShowTranslation(!showTranslation);
+        setShowTranslation((showTranslation) => (showTranslation = !showTranslation));
     };
 
     return (
@@ -15,7 +15,11 @@ export function Card(props) {
             <h2 className={styles.word}>{english}</h2>
             <div className={styles.text}>{transcription}</div>
             <div className={styles.answer}>
-                <Button name={showTranslation ? 'hide' : 'translate'} onClick={toggleTranslation} customClass={styles.answer_button} />
+                <Button
+                    name={showTranslation ? 'hide' : 'translate'}
+                    onClick={toggleTranslation}
+                    customClass={styles.answer_button}
+                />
                 <div className={`${styles.answer_text} ${showTranslation ? '' : styles.hide}`}>{russian}</div>
             </div>
         </div>

@@ -13,8 +13,6 @@ export function Row(props) {
 
     const [change, setChange] = useState(null);
     const handleChange = (type) => {
-        console.log(change);
-        console.log(type);
         if (change === type) {
             setChange((change) => (change = null));
         } else {

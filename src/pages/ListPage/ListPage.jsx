@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Row } from '../../components/Row/Row';
 import styles from '../../styles/ListPage.module.scss';
 
