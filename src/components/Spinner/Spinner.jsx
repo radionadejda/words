@@ -4,9 +4,13 @@ import React from 'react';
 
 export function Spinner() {
     return (
-        <div className={styles.spinner}>
+        <main className={styles.spinner}>
             <p>we're waiting for data, here's a cat</p>
-            <img src="./cat_roll.gif" alt="cat-rolling-around" />
-        </div>
+            <img
+                src="../../../public/cat_roll.gif"
+                alt="cat-rolling-around"
+                className={styles.img}
+            />
+        </main>
     );
 }
