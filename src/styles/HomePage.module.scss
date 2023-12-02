@@ -20,7 +20,7 @@
     margin: 0 auto;
     height: 100%;
 
-    @media screen and (max-width: 576px) {
+    @media screen and (max-width: $mobile) {
         flex-direction: column;
         justify-content: space-between;
     }
@@ -55,7 +55,7 @@
     &:active {
         background-color: $accent2;
     }
-    @media (max-width: 576px) {
+    @media (max-width: $mobile) {
         height: 25vh;
         min-width: 50vw;
     }

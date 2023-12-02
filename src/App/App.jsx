@@ -6,11 +6,10 @@ import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
 import { Spinner } from '../components/Spinner/Spinner';
 
-// import data from '../data/data.json';
+import data from '../data/data.json';
 import styles from '../styles/App.module.scss';
 
 function App() {
-    const data = false;
     const [words, setWords] = useState(() => data || false);
     const stateWords = { words, setWords };
     if (!words) {

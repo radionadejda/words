@@ -23,6 +23,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-around;
+    @media (max-width: $medium) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
 }
 
 .text {
@@ -39,4 +43,8 @@
 .heading {
     background-color: rgba($accent2, 0.5);
     font-weight: bold;
+}
+
+.hide {
+    display: none;
 }
