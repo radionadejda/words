@@ -3,12 +3,12 @@ import { Card } from '../../components/Card/Card.jsx';
 // import { FlipCard } from '../../components/FlipCard/FlipCard.jsx';
 // FlipCard looks better but doesn't use state as required.
 // To see also need to change Card into FlipCard in return
-import words from '../../data/data.json';
 import styles from '../../styles/CardsPage.module.scss';
+import { Spinner } from '../../components/Spinner/Spinner.jsx';
 
 export const CardsPage = ({ stateWords }) => {
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
-    const wordsCount = words.length;
+    const wordsCount = stateWords.words.length;
 
     const goToPreviousCard = () => {
         setCurrentWordIndex((prevIndex) => (prevIndex - 1 + wordsCount) % wordsCount);
@@ -18,7 +18,15 @@ export const CardsPage = ({ stateWords }) => {
         setCurrentWordIndex((prevIndex) => (prevIndex + 1) % wordsCount);
     };
 
-    const currentWord = words[currentWordIndex];
+    if (wordsCount === 0) {
+        return <Spinner message="No words available" />;
+    }
+
+    const currentWord = stateWords.words[currentWordIndex];
+    if (!currentWord || typeof currentWord !== 'object') {
+        return <Spinner message="Invalid word data" />;
+    }
+
     return (
         <main className={styles.main}>
             <div className={styles.gallery}>
@@ -30,7 +38,7 @@ export const CardsPage = ({ stateWords }) => {
                 </button>
                 <Card
                     key={currentWordIndex}
-                    word={stateWords.words[currentWordIndex]}
+                    word={currentWord}
                 />
                 <button
                     id="nextButton"

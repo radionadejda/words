@@ -1,0 +1,9 @@
+[
+    { "id": "15836", "english": "Morgen", "transcription": "[ ˈmɔːɡ(ə)n ]", "russian": "утро", "tags": "", "tags_json": "[\"\"]" },
+    { "id": "15841", "english": "verlieben", "transcription": "[ verlieben ]", "russian": "влюбляться", "tags": "emotions", "tags_json": "[\"cosmetics\"]" },
+    { "id": "15844", "english": "neugierig", "transcription": "[ neugierig ]", "russian": "любопытный", "tags": "emotions", "tags_json": "[\"emotions\"]" },
+    { "id": "15848", "english": "Richter", "transcription": "[ Richter ]", "russian": "судья", "tags": "professions", "tags_json": "[\"professions\"]" },
+    { "id": "15850", "english": "Gärtner", "transcription": "[ ˈɡɑːrtnər ]", "russian": "садовник", "tags": "professions", "tags_json": "[\"professions\"]" },
+    { "id": "15852", "english": "Wein", "transcription": "[ waɪn ]", "russian": "вино", "tags": "drinks", "tags_json": "[\"drinks\"]" },
+    { "id": "15854", "english": "schläfrig", "transcription": "[ schläfrig ]", "russian": "сонный", "tags": "emotions", "tags_json": "[\"emotions\"]" }
+]

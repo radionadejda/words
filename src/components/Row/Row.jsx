@@ -7,10 +7,10 @@ export const Row = (props) => {
     const { english, transcription, russian, tags } = props.word;
     const isHeading = props.isHeading || false;
 
-    const [englishValue, setEnglishValue] = useState(english);
-    const [transcriptionValue, setTranscriptionValue] = useState(transcription);
-    const [russianValue, setRussianValue] = useState(russian);
-    const [tagsValue, setTagsValue] = useState(tags);
+    // const [englishValue, setEnglishValue] = useState(english);
+    // const [transcriptionValue, setTranscriptionValue] = useState(transcription);
+    // const [russianValue, setRussianValue] = useState(russian);
+    // const [tagsValue, setTagsValue] = useState(tags);
 
     const [change, setChange] = useState(null);
     const [showForm, setShowForm] = useState(false);
@@ -32,11 +32,11 @@ export const Row = (props) => {
     return (
         <div className={styles.container}>
             <div className={`${styles.row} ${isHeading ? styles.heading : ''}`}>
-                <h2 className={styles.word}>{englishValue}</h2>
+                <h2 className={styles.word}>{english}</h2>
                 <div className={styles.description}>
-                    <div className={styles.transcription}>{transcriptionValue}</div>
-                    <div className={styles.answer}>{russianValue}</div>
-                    <div className={styles.tags}>{tagsValue}</div>
+                    <div className={styles.transcription}>{transcription}</div>
+                    <div className={styles.answer}>{russian}</div>
+                    <div className={styles.tags}>{tags}</div>
                 </div>
                 {isHeading ? (
                     <div className={styles.edit}>

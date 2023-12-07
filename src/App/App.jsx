@@ -6,11 +6,34 @@ import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
 import { Spinner } from '../components/Spinner/Spinner';
 
-import data from '../data/data.json';
+import english from '../data/english.json';
+import german from '../data/german.json';
 import styles from '../styles/App.module.scss';
 
+const languages = {
+    english,
+    german
+};
+
 function App() {
-    const [words, setWords] = useState(() => data || false);
+    const storedLanguage = localStorage.getItem('language');
+    const defaultLanguage = storedLanguage && languages[storedLanguage] ? storedLanguage : 'english';
+
+    const [words, setWords] = useState(languages[defaultLanguage]);
+
+    useEffect(() => {
+        if (storedLanguage && languages[storedLanguage]) {
+            setWords(languages[storedLanguage]);
+        }
+    }, [storedLanguage]);
+
+    const handleLanguageChange = (language) => {
+        if (languages[language]) {
+            setWords(languages[language]);
+            localStorage.setItem('language', language);
+        }
+    };
+
     const stateWords = { words, setWords };
     if (!words) {
         return (
@@ -27,7 +50,7 @@ function App() {
     return (
         <Router>
             <div className={styles.App}>
-                <Header />
+                <Header onLanguageChange={handleLanguageChange} />
                 <Routes>
                     <Route
                         path="/"
