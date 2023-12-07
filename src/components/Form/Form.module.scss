@@ -1,1 +1,18 @@
 @import '../../styles/vars';
+
+.form {
+    background-color: rgba($accent1, 0.2);
+    // display: grid;
+    // grid-template-columns: 1fr;
+    width: 100%;
+    justify-content: stretch;
+    border-radius: 0.3rem;
+    margin: 1% auto;
+}
+
+.close_button,
+.submit_button {
+    background-color: $accent2;
+    padding: 1%;
+    margin: 1% auto;
+}

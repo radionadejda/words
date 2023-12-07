@@ -28,7 +28,7 @@
     color: $text;
     &:hover {
         transition: all 0.3s ease;
-        background-color: rgba($accent1, 0.1);
+        color: $accent2;
     }
 }
 
@@ -42,23 +42,40 @@
 
 .nav__item {
     width: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 2% 6%;
     text-decoration: none;
-    background-color: $accent2;
+    background-color: $accent1;
     color: $text;
-    border: 1px solid $accent2;
     border-radius: 0.3rem;
     transition: all 0.3s ease;
     cursor: pointer;
     &:hover {
-        background-color: $accent1;
+        background-color: $accent2;
         transition: 0.5s;
     }
     &:focus,
     &:active {
         background-color: $accent2;
     }
+}
+
+.header__select {
+    width: fit-content;
+    padding: 5% 15%;
+    background-color: $accent1;
+    color: $text;
+    border-radius: 0.3rem;
+    border: none;
+    outline: none;
+    &:hover {
+        background-color: rgba($accent2, 0.3);
+    }
+    &:focus,
+    &:active {
+        background-color: rgba($accent1, 0.3);
+    }
+}
+
+.select__option {
+    background-color: rgba($accent1, 0.8);
 }

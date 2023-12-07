@@ -58,14 +58,12 @@ export const Row = (props) => {
                     </div>
                 )}
             </div>
-            <div className={styles.change}>
-                {showForm && (
-                    <Form
-                        onClose={handleCloseForm}
-                        mode={change}
-                    />
-                )}
-            </div>
+            {showForm && (
+                <Form
+                    onClose={handleCloseForm}
+                    mode={change}
+                />
+            )}
         </div>
     );
 };

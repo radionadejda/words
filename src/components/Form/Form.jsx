@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button } from '../Button/Button';
 import styles from './Form.module.scss';
 
 export const Form = ({ onClose, mode }) => {
@@ -24,12 +25,19 @@ export const Form = ({ onClose, mode }) => {
 
     return (
         <div>
-            <div>
+            <div className={styles.form}>
                 <h2>{formTitle}</h2>
                 <form>
-                    <button>{buttonText}</button>
+                    <Button
+                        name={buttonText}
+                        customClass={styles.submit_button}
+                    />
                 </form>
-                <button onClick={onClose}>Close</button>
+                <Button
+                    name={'close'}
+                    onClick={onClose}
+                    customClass={styles.close_button}
+                />
             </div>
         </div>
     );

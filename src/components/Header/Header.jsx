@@ -14,14 +14,25 @@ export const Header = ({ onLanguageChange }) => {
                 <h1 className={styles.title}>another learning app</h1>
             </NavLink>
             <div>
-                <select onChange={(e) => changeLanguage(e.target.value)}>
+                <select
+                    className={styles.header__select}
+                    onChange={(e) => changeLanguage(e.target.value)}>
                     <option
                         value=""
-                        disabled>
+                        disabled
+                        className={styles.select__option}>
                         pick language
                     </option>
-                    <option value="english">English</option>
-                    <option value="german">German</option>
+                    <option
+                        value="english"
+                        className={styles.select__option}>
+                        English
+                    </option>
+                    <option
+                        value="german"
+                        className={styles.select__option}>
+                        German
+                    </option>
                 </select>
             </div>
             <nav className={styles.header__nav}>

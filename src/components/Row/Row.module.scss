@@ -12,7 +12,7 @@
     height: min-content;
     padding: 1vh;
     justify-content: space-around;
-    border-radius: 1rem;
+    border-radius: 0.3rem;
     color: $text;
     &:hover {
         transition: 0.5s;
@@ -42,18 +42,14 @@
 }
 
 .heading {
-    background-color: rgba($accent2, 0.2);
+    border-radius: 0;
     font-weight: bold;
+    border-bottom: 1px solid $accent2;
+    &:hover {
+        background-color: rgba($accent2, 0);
+    }
 }
 
 .hide {
     display: none;
-}
-
-.change {
-    background-color: $accent1;
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 100%;
-    justify-content: stretch;
 }

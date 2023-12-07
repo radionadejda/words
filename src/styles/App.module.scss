@@ -15,6 +15,6 @@ $font: 'Roboto';
 
 .App {
     text-align: center;
-    background-color: $bg;
+    background: linear-gradient(325deg, rgba($accent2, 1) 0%, rgba($accent1, 1) 100%);
     min-height: 100vh;
 }

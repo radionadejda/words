@@ -2,10 +2,10 @@
 
 .main {
     @include main;
+    justify-content: flex-start;
 }
 
 .list {
     width: 100%;
-    background-color: rgba($accent1, 0.1);
     border-radius: 0.3rem;
 }

@@ -10,20 +10,23 @@
     text-wrap: nowrap;
     height: 40vh;
     border: 1px solid $accent2;
-    border-radius: 1rem;
-    background: $accent2;
-    background: linear-gradient(150deg, rgba($accent2, 1) 0%, rgba($accent1, 1) 100%);
+    border-radius: 0.3rem;
+    background: rgba($accent2, 0.1);
     color: $text;
     margin: 0 2vw;
+    &:hover {
+        transform: translateY(-2px);
+        transition: 0.5s;
+    }
 }
 
 .answer_button {
     padding: 5%;
-    background-color: $accent2;
+    background-color: $accent1;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 
     &:active {
-        background-color: $shadow;
+        background-color: $accent2;
     }
 }
 

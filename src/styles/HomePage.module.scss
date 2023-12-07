@@ -34,8 +34,7 @@
     align-items: center;
     justify-content: center;
     padding: 2% 6%;
-    background-color: rgba($accent1, 0.2);
-    border: 1px solid $accent1;
+    background-color: rgba($accent2, 0.1);
     border-radius: 0.3rem;
     transition: all 0.3s ease;
     color: $text;
@@ -47,12 +46,12 @@
     text-wrap: wrap;
     margin: 1% auto;
     &:hover {
-        background-color: $accent2;
+        background-color: rgba($accent2, 0.3);
         transition: 0.5s;
     }
     &:focus,
     &:active {
-        background-color: $accent2;
+        background-color: rgba($accent1, 0.3);
     }
     @media (max-width: $mobile) {
         height: 25vh;
