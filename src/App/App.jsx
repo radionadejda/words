@@ -20,16 +20,19 @@ function App() {
     const defaultLanguage = storedLanguage && languages[storedLanguage] ? storedLanguage : 'english';
 
     const [words, setWords] = useState(languages[defaultLanguage]);
+    const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
 
     useEffect(() => {
         if (storedLanguage && languages[storedLanguage]) {
             setWords(languages[storedLanguage]);
+            setSelectedLanguage(storedLanguage);
         }
     }, [storedLanguage]);
 
     const handleLanguageChange = (language) => {
         if (languages[language]) {
             setWords(languages[language]);
+            setSelectedLanguage(language);
             localStorage.setItem('language', language);
         }
     };
@@ -50,7 +53,10 @@ function App() {
     return (
         <Router>
             <div className={styles.App}>
-                <Header onLanguageChange={handleLanguageChange} />
+                <Header
+                    onLanguageChange={handleLanguageChange}
+                    selectedLanguage={selectedLanguage}
+                />
                 <Routes>
                     <Route
                         path="/"

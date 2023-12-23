@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 
-export const Header = ({ onLanguageChange }) => {
+export const Header = ({ onLanguageChange, selectedLanguage }) => {
     const changeLanguage = (language) => {
         onLanguageChange(language);
     };
@@ -16,7 +16,8 @@ export const Header = ({ onLanguageChange }) => {
             <div>
                 <select
                     className={styles.header__select}
-                    onChange={(e) => changeLanguage(e.target.value)}>
+                    onChange={(e) => changeLanguage(e.target.value)}
+                    value={selectedLanguage}>
                     <option
                         value=""
                         disabled
