@@ -4,14 +4,19 @@
     padding: 2% 6%;
     border: none;
     border-radius: 0.3rem;
-    background-color: $accent2;
+    background-color: $accent1;
     color: $text;
     min-width: fit-content;
     text-wrap: nowrap;
     &:hover,
     &:active {
         transition: 0.5s;
-        background-color: $accent2;
         color: $text;
+    }
+    &:hover {
+        background-color: $accent2;
+    }
+    &:active {
+        transform: scale(1.2);
     }
 }
