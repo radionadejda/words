@@ -14,14 +14,12 @@ export const Card = (props) => {
         <div className={styles.card}>
             <h2 className={styles.word}>{english}</h2>
             <div className={styles.text}>{transcription}</div>
-            <div className={styles.answer}>
-                <Button
-                    name={showTranslation ? 'hide' : 'translate'}
-                    onClick={toggleTranslation}
-                    customClass={styles.answer_button}
-                />
-                <div className={`${styles.answer_text} ${showTranslation ? '' : styles.hide}`}>{russian}</div>
-            </div>
+            <Button
+                name={showTranslation ? 'hide' : 'translate'}
+                onClick={toggleTranslation}
+                customClass={styles.answer_button}
+            />
+            <div className={`${styles.answer_text} ${showTranslation ? '' : styles.hide}`}>{russian}</div>
         </div>
     );
 };

@@ -10,12 +10,12 @@ export const HomePage = () => {
                 <NavLink
                     to="/cards"
                     className={styles.block}>
-                    <div>learn with cards</div>
+                    learn with cards
                 </NavLink>
                 <NavLink
                     to="/list"
                     className={styles.block}>
-                    <div>check word list</div>
+                    check word list
                 </NavLink>
             </div>
         </main>

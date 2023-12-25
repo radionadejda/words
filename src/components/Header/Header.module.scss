@@ -11,25 +11,22 @@
 }
 
 .title {
+    font-family: $graffiti-shadow;
     font-size: 1.5rem;
     text-transform: uppercase;
-    font-weight: bold;
-    width: fit-content;
-}
-
-.header__link {
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 2%;
-    border-radius: 0.3rem;
-    text-decoration: none;
-    width: fit-content;
-    margin: 0 2%;
+    min-width: fit-content;
     color: $text;
     &:hover {
         transition: all 0.3s ease;
         color: $accent2;
     }
+}
+
+.header__link {
+    padding: 2%;
+    text-decoration: none;
+    margin: 0 2%;
+    width: 40%;
 }
 
 .header__nav {
@@ -41,6 +38,8 @@
 }
 
 .nav__item {
+    font-family: $graffiti;
+    font-weight: bold;
     width: fit-content;
     padding: 2% 6%;
     text-decoration: none;

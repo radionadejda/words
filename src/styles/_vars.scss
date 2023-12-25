@@ -19,6 +19,26 @@ $header-height: 15vh;
 $footer-height: 15vh;
 $main-height: 70vh;
 
+@font-face {
+    font-family: 'Roboto';
+    src: url(../fonts/Roboto-Medium.ttf);
+}
+$font: 'Roboto';
+
+@font-face {
+    font-family: 'GraffitiShadow';
+    src: url(../fonts/SpriteGraffitiShadow.otf);
+}
+
+$graffiti-shadow: 'GraffitiShadow';
+
+@font-face {
+    font-family: 'Graffiti';
+    src: url(../fonts/SpriteGraffiti.otf);
+}
+
+$graffiti: 'Graffiti';
+
 @mixin main {
     display: flex;
     flex-direction: column;

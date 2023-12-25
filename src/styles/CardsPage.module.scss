@@ -13,9 +13,14 @@
 }
 
 .arrow {
+    font-family: $graffiti-shadow;
     background: none;
-    font-size: 10vh;
+    font-size: 5rem;
     border: none;
     padding: 0;
     cursor: pointer;
+    &:hover {
+        transform: translateY(-2px);
+        transition: 0.5s;
+    }
 }

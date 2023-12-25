@@ -1,6 +1,8 @@
 @import '../../styles/vars';
 
 .button {
+    font-family: $graffiti;
+    font-size: 1rem;
     padding: 2% 6%;
     border: none;
     border-radius: 0.3rem;
@@ -8,6 +10,9 @@
     color: $text;
     min-width: fit-content;
     text-wrap: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover,
     &:active {
         transition: 0.5s;

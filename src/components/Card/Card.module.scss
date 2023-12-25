@@ -21,24 +21,19 @@
 }
 
 .answer_button {
-    padding: 5%;
+    width: 40%;
+    margin: 2% auto;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 }
 
-.answer {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    margin: 2% auto;
-}
-
 .word {
-    color: $text;
-    font-size: 2rem;
+    font-family: $graffiti-shadow;
+    font-size: 2.5rem;
 }
 
 .answer_text {
-    margin: 5% auto;
+    font-family: $graffiti;
+    font-size: 2.5rem;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 }
 

@@ -11,8 +11,6 @@ export const Footer = () => {
                 </a>{' '}
                 made me
             </p>{' '}
-            <br />
-            <p>to hurt people's eyes apparently</p>
         </footer>
     );
 };
