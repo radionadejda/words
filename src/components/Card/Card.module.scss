@@ -20,10 +20,14 @@
     }
 }
 
-.answer_button {
+.translate_button {
     width: 40%;
     margin: 2% auto;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 2px 2px rgba($accent2, 0.9) inset;
+    }
 }
 
 .word {
@@ -31,7 +35,7 @@
     font-size: 2.5rem;
 }
 
-.answer_text {
+.translation {
     font-family: $graffiti;
     font-size: 2.5rem;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;

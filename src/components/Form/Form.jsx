@@ -28,16 +28,18 @@ export const Form = ({ onClose, mode }) => {
             <div className={styles.form}>
                 <h2>{formTitle}</h2>
                 <form>
-                    <Button
-                        name={buttonText}
-                        customClass={styles.submit_button}
-                    />
+                    <div className={styles.form_footer}>
+                        <Button
+                            name={buttonText}
+                            customClass={styles.submit_button}
+                        />
+                        <Button
+                            name={'cancel+close'}
+                            onClick={onClose}
+                            customClass={styles.close_button}
+                        />
+                    </div>
                 </form>
-                <Button
-                    name={'close'}
-                    onClick={onClose}
-                    customClass={styles.close_button}
-                />
             </div>
         </div>
     );

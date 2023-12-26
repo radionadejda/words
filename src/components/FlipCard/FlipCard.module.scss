@@ -10,34 +10,19 @@
     border: 1px solid $accent2;
     border-radius: 0.3rem;
     background: $accent2;
-    background: linear-gradient(150deg, rgba($accent2, 1) 0%, rgba($accent1, 1) 100%);
+    background: linear-gradient(150deg, rgba($accent1, 1) 0%, rgba($accent2, 1) 100%);
     color: $text;
     margin: 0 2vw;
 }
 
 .card_back {
-    background: $accent1;
-    background: linear-gradient(150deg, rgba($accent1, 1) 0%, rgba($accent2, 1) 100%);
-}
-
-.answer_button {
-    padding: 5%;
-    background-color: $shadow;
-    transition: visibility 0s linear 0.33s, opacity 0.33s linear;
-
-    &:active {
-        background-color: $accent2;
-    }
-}
-
-.answer {
+    background: linear-gradient(150deg, rgba($accent2, 1) 0%, rgba($accent1, 1) 100%);
     display: flex;
     flex-direction: column;
-    width: 40%;
-    margin: 2% auto;
 }
 
 .word {
+    font-family: $graffiti-shadow;
     color: $text;
     font-size: 2rem;
 }
@@ -48,6 +33,7 @@
 }
 
 .answer_text {
+    font-family: $graffiti;
     margin: 5% auto;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
     font-size: 2rem;

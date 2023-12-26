@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '../Button/Button';
 import styles from './Card.module.scss';
 
 export const Card = (props) => {
     const { english, transcription, russian } = props.word;
     const [showTranslation, setShowTranslation] = useState(false);
+    const [isLearned, setIsLearned] = useState(false);
 
     const toggleTranslation = () => {
-        setShowTranslation((showTranslation) => (showTranslation = !showTranslation));
+        setShowTranslation((showTranslation) => !showTranslation);
+        if (!isLearned) {
+            props.countLearnedWords();
+            setIsLearned(true);
+        }
     };
+
+    const translateButtonRef = useRef(null);
+    useEffect(() => {
+        if (translateButtonRef.current) {
+            translateButtonRef.current.focus();
+        }
+    }, [props.word]); // тут мог быть пустой массив, чтобы обновление фокуса происходило при каждом рендере, но тогда фокус не переставляется при смене набора слов. удалю коммент после проверки
 
     return (
         <div className={styles.card}>
@@ -16,10 +28,13 @@ export const Card = (props) => {
             <div className={styles.text}>{transcription}</div>
             <Button
                 name={showTranslation ? 'hide' : 'translate'}
-                onClick={toggleTranslation}
-                customClass={styles.answer_button}
+                ref={translateButtonRef}
+                onClick={() => {
+                    toggleTranslation();
+                }}
+                customClass={styles.translate_button}
             />
-            <div className={`${styles.answer_text} ${showTranslation ? '' : styles.hide}`}>{russian}</div>
+            <div className={`${styles.translation} ${showTranslation ? '' : styles.hide}`}>{russian}</div>
         </div>
     );
 };

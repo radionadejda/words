@@ -1,6 +1,7 @@
+import React, { useState, useEffect, forwardRef } from 'react';
 import styles from './Button.module.scss';
 
-export const Button = (props) => {
+export const Button = forwardRef((props, ref) => {
     const buttonClass = `${styles.button} ${props.customClass || ''}`;
 
     const handleClick = () => {
@@ -11,9 +12,10 @@ export const Button = (props) => {
 
     return (
         <button
+            ref={ref}
             className={buttonClass}
             onClick={handleClick}>
             {props.name}
         </button>
     );
-};
+});
