@@ -23,7 +23,7 @@ export const Card = (props) => {
     return (
         <div className={styles.card}>
             <h2 className={styles.word}>{english}</h2>
-            <div className={styles.text}>{transcription}</div>
+            <div className={styles.transcription}>{transcription}</div>
             <Button
                 name={showTranslation ? 'hide' : 'translate'}
                 ref={translateButtonRef}
