@@ -52,9 +52,8 @@
         background-color: $accent2;
         transition: 0.5s;
     }
-    &:focus,
     &:active {
-        background-color: $accent2;
+        background-color: $accent3;
     }
 }
 

@@ -14,11 +14,15 @@
     justify-content: center;
     align-items: center;
     &:hover,
-    &:active {
+    &:active,
+    &:focus {
         transition: 0.5s;
-        color: $text;
     }
     &:hover {
         background-color: $accent2;
+    }
+    &:active,
+    &:focus {
+        background-color: $accent3;
     }
 }
