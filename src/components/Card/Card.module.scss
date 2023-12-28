@@ -32,7 +32,7 @@
 }
 
 .transcription {
-    font-family: 'Courier New', Courier, monospace;
+    @include transcription;
 }
 
 .translation {

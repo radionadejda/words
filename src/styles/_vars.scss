@@ -42,3 +42,7 @@ $graffiti: 'Graffiti';
     padding: 2% 5%;
     min-height: $main-height;
 }
+
+@mixin transcription {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
