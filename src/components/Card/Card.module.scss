@@ -24,10 +24,6 @@
     width: 40%;
     margin: 2% auto;
     transition: visibility 0s linear 0.33s, opacity 0.33s linear;
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 2px 2px rgba($accent3, 0.9) inset;
-    }
 }
 
 .word {
