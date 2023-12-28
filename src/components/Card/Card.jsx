@@ -17,9 +17,7 @@ export const Card = (props) => {
 
     const translateButtonRef = useRef(null);
     useEffect(() => {
-        if (translateButtonRef.current) {
-            translateButtonRef.current.focus();
-        }
+        translateButtonRef.current.focus();
     }, [props.word]); // тут мог быть пустой массив, чтобы обновление фокуса происходило при каждом рендере, но тогда фокус не переставляется при смене набора слов. удалю коммент после проверки
 
     return (
