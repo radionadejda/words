@@ -12,10 +12,10 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
     const [currentWordId, setCurrentWordId] = useState('');
     const [learnedWords, setLearnedWords] = useState([]);
     const [restartCounter, setRestartCounter] = useState(false);
+    const [showTranslation, setShowTranslation] = useState(false); // New state for translation visibility
 
     const wordsCount = stateWords.words.length;
     const learnedWordsKey = `learnedWords_${selectedLanguage}`;
-    const learnedWordsForLanguage = parseInt(localStorage.getItem(learnedWordsKey)) || 0;
 
     if (wordsCount === 0) {
         return <Spinner message="No words available" />;
@@ -23,8 +23,8 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
 
     useEffect(() => {
         setCurrentWordId(stateWords.words[0]?.id || '');
-        setLearnedWords([]);
-    }, [stateWords]);
+        setShowTranslation(false);
+    }, [stateWords, restartCounter]);
 
     const currentWord = useWordById(stateWords.words, currentWordId);
 
@@ -32,27 +32,30 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
         const currentIndex = stateWords.words.findIndex((word) => word.id === currentWordId);
         const prevIndex = (currentIndex - 1 + wordsCount) % wordsCount;
         setCurrentWordId(stateWords.words[prevIndex].id);
+        setShowTranslation(false);
     };
 
     const goToNextCard = () => {
         const currentIndex = stateWords.words.findIndex((word) => word.id === currentWordId);
         const nextIndex = (currentIndex + 1) % wordsCount;
         setCurrentWordId(stateWords.words[nextIndex].id);
+        setShowTranslation(false);
     };
 
     const countLearnedWords = () => {
         if (!learnedWords.includes(currentWordId)) {
             const updatedLearnedWords = [...learnedWords, currentWordId];
-
-            if (updatedLearnedWords.length <= wordsCount) {
-                setLearnedWords(updatedLearnedWords);
-
-                const learnedWordsForLanguage = parseInt(localStorage.getItem(learnedWordsKey)) || 0;
-                const newLearnedWordsCount = Math.min(learnedWordsForLanguage + 1, wordsCount);
-                localStorage.setItem(learnedWordsKey, newLearnedWordsCount.toString());
-            }
+            setLearnedWords(updatedLearnedWords);
+            localStorage.setItem(learnedWordsKey, JSON.stringify(updatedLearnedWords));
         }
     };
+
+    useEffect(() => {
+        const storedLearnedWords = localStorage.getItem(learnedWordsKey);
+        if (storedLearnedWords) {
+            setLearnedWords(JSON.parse(storedLearnedWords));
+        }
+    }, [learnedWordsKey]);
 
     const handleKeyPress = (event) => {
         if (event.code === 'ArrowLeft') {
@@ -63,11 +66,6 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
     };
 
     useEffect(() => {
-        setCurrentWordId(stateWords.words[0]?.id || '');
-        setLearnedWords([]);
-    }, [stateWords]);
-
-    useEffect(() => {
         window.addEventListener('keydown', handleKeyPress);
         return () => {
             window.removeEventListener('keydown', handleKeyPress);
@@ -76,14 +74,17 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
 
     const resetWordsCount = () => {
         localStorage.removeItem(learnedWordsKey);
+        setLearnedWords([]);
         setRestartCounter((prevState) => !prevState);
+        setShowTranslation(false);
     };
 
     const learnedWordsMessage = () => {
-        if (learnedWordsForLanguage === wordsCount) {
+        const learnedWordsCount = learnedWords.length;
+        if (learnedWordsCount === wordsCount) {
             return `Congratulations, you've learned all ${wordsCount} words in this set`;
         } else {
-            return `You've learned ${learnedWordsForLanguage} ${learnedWordsForLanguage === 1 ? 'word' : 'words'} out of ${wordsCount}`;
+            return `You've learned ${learnedWordsCount} ${learnedWordsCount === 1 ? 'word' : 'words'} out of ${wordsCount}`;
         }
     };
 
@@ -103,6 +104,8 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
                 <Card
                     key={currentWordId}
                     word={currentWord}
+                    showTranslation={showTranslation}
+                    setShowTranslation={setShowTranslation}
                     countLearnedWords={() => countLearnedWords()}
                 />
                 <button
