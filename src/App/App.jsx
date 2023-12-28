@@ -34,6 +34,7 @@ function App() {
             setWords(languages[language]);
             setSelectedLanguage(language);
             localStorage.setItem('language', language);
+            localStorage.setItem('learnedWords', '0');
         }
     };
 

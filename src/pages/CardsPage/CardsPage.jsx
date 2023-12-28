@@ -7,27 +7,54 @@ import styles from '../../styles/CardsPage.module.scss';
 import { Spinner } from '../../components/Spinner/Spinner.jsx';
 
 export const CardsPage = ({ stateWords }) => {
-    const [currentWordIndex, setCurrentWordIndex] = useState(0);
+    const [currentWordId, setCurrentWordId] = useState('');
     const [isFinished, setIsFinished] = useState(false);
     const [learnedWords, setLearnedWords] = useState(0);
+    const [learnedWordsList, setLearnedWordsList] = useState([]);
     const wordsCount = stateWords.words.length;
 
     if (wordsCount === 0) {
         return <Spinner message="No words available" />;
     }
 
-    const currentWord = stateWords.words[currentWordIndex];
-    if (!currentWord || typeof currentWord !== 'object') {
-        return <Spinner message="Invalid word data" />;
-    }
+    const getCurrentWordById = (wordId) => {
+        return stateWords.words.find((word) => word.id === wordId) || {};
+    };
+
+    useEffect(() => {
+        setCurrentWordId(stateWords.words[0]?.id || '');
+        setLearnedWordsList([]);
+        setLearnedWords(0);
+        setIsFinished(false);
+    }, [stateWords]);
 
     const goToPreviousCard = () => {
-        setCurrentWordIndex((prevIndex) => (prevIndex - 1 + wordsCount) % wordsCount);
+        const currentIndex = stateWords.words.findIndex((word) => word.id === currentWordId);
+        const prevIndex = (currentIndex - 1 + wordsCount) % wordsCount;
+        setCurrentWordId(stateWords.words[prevIndex].id);
     };
 
     const goToNextCard = () => {
-        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % wordsCount);
+        const currentIndex = stateWords.words.findIndex((word) => word.id === currentWordId);
+        const nextIndex = (currentIndex + 1) % wordsCount;
+        setCurrentWordId(stateWords.words[nextIndex].id);
     };
+
+    const countLearnedWords = () => {
+        if (!learnedWordsList.includes(currentWordId)) {
+            const updatedLearnedWordsList = [...learnedWordsList, currentWordId];
+            setLearnedWordsList(updatedLearnedWordsList);
+
+            if (updatedLearnedWordsList.length === wordsCount) {
+                setIsFinished(true);
+            } else {
+                setLearnedWords(learnedWords + 1);
+                localStorage.setItem('learnedWords', (learnedWords + 1).toString());
+            }
+        }
+    };
+
+    const currentWord = getCurrentWordById(currentWordId);
 
     useEffect(() => {
         const handleKeyPress = (event) => {
@@ -43,19 +70,9 @@ export const CardsPage = ({ stateWords }) => {
         };
     }, [goToPreviousCard, goToNextCard]);
 
-    useEffect(() => {
-        setCurrentWordIndex(0);
-        setLearnedWords(0);
-        setIsFinished(false);
-    }, [stateWords]);
-
-    const countLearnedWords = () => {
-        if (learnedWords === wordsCount - 1) {
-            setIsFinished(true);
-        } else {
-            setLearnedWords((learnedWords) => learnedWords + 1);
-        }
-    };
+    if (!currentWord || typeof currentWord !== 'object') {
+        return <Spinner message="Invalid word data" />;
+    }
 
     return (
         <main className={styles.main}>
@@ -67,7 +84,7 @@ export const CardsPage = ({ stateWords }) => {
                     ‹
                 </button>
                 <Card
-                    key={currentWordIndex}
+                    key={currentWordId}
                     word={currentWord}
                     countLearnedWords={() => countLearnedWords()}
                 />
