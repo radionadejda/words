@@ -6,6 +6,12 @@ export const Header = ({ onLanguageChange, selectedLanguage }) => {
         onLanguageChange(language);
     };
 
+    const languages = [
+        { value: '', label: 'Pick Language', className: styles.select__option, disabled: true },
+        { value: 'english', label: 'English', className: styles.select__option },
+        { value: 'german', label: 'German', className: styles.select__option }
+    ];
+
     return (
         <header className={styles.header}>
             <NavLink
@@ -13,27 +19,20 @@ export const Header = ({ onLanguageChange, selectedLanguage }) => {
                 className={styles.header__link}>
                 <h1 className={styles.title}>another learning app</h1>
             </NavLink>
-            <div>
+            <div className={styles.container}>
                 <select
                     className={styles.header__select}
                     onChange={(e) => changeLanguage(e.target.value)}
                     value={selectedLanguage}>
-                    <option
-                        value=""
-                        disabled
-                        className={styles.select__option}>
-                        pick language
-                    </option>
-                    <option
-                        value="english"
-                        className={styles.select__option}>
-                        English
-                    </option>
-                    <option
-                        value="german"
-                        className={styles.select__option}>
-                        German
-                    </option>
+                    {languages.map((lang) => (
+                        <option
+                            key={lang.value}
+                            value={lang.value}
+                            className={lang.className}
+                            disabled={lang.disabled}>
+                            {lang.label}
+                        </option>
+                    ))}
                 </select>
             </div>
             <nav className={styles.header__nav}>

@@ -15,7 +15,7 @@ export const Row = (props) => {
     const [change, setChange] = useState(null);
     const [showForm, setShowForm] = useState(false);
 
-    const handleChange = (type) => {
+    const handleWordEdit = (type) => {
         if (change === type && showForm) {
             setShowForm(false);
         } else {
@@ -42,18 +42,18 @@ export const Row = (props) => {
                     <div className={styles.edit}>
                         <Button
                             name="add"
-                            onClick={() => handleChange('add')}
+                            onClick={() => handleWordEdit('add')}
                         />
                     </div>
                 ) : (
                     <div className={styles.edit}>
                         <Button
                             name="edit"
-                            onClick={() => handleChange('edit')}
+                            onClick={() => handleWordEdit('edit')}
                         />
                         <Button
                             name="remove"
-                            onClick={() => handleChange('remove')}
+                            onClick={() => handleWordEdit('remove')}
                         />
                     </div>
                 )}

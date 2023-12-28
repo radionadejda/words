@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import styles from './Button.module.scss';
 
 export const Button = forwardRef((props, ref) => {

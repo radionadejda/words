@@ -1,27 +1,21 @@
 import { useState } from 'react';
 import { Button } from '../Button/Button';
 import styles from './Form.module.scss';
+const buttonTexts = {
+    add: 'Add Word',
+    edit: 'Edit Word',
+    remove: 'Remove Word'
+};
+
+const formTitles = {
+    add: 'Add Word Form',
+    edit: 'Edit Word Form',
+    remove: 'Remove Word Form'
+};
 
 export const Form = ({ onClose, mode }) => {
-    let buttonText = '';
-    let formTitle = '';
-
-    switch (mode) {
-        case 'add':
-            buttonText = 'Add Word';
-            formTitle = 'Add Word Form';
-            break;
-        case 'edit':
-            buttonText = 'Edit Word';
-            formTitle = 'Edit Word Form';
-            break;
-        case 'remove':
-            buttonText = 'Remove Word';
-            formTitle = 'Remove Word Form';
-            break;
-        default:
-            break;
-    }
+    const buttonText = buttonTexts[mode] || '';
+    const formTitle = formTitles[mode] || '';
 
     return (
         <div>
@@ -34,7 +28,7 @@ export const Form = ({ onClose, mode }) => {
                             customClass={styles.submit_button}
                         />
                         <Button
-                            name={'cancel+close'}
+                            name="cancel+close"
                             onClick={onClose}
                             customClass={styles.close_button}
                         />

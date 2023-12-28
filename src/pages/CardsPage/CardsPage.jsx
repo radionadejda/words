@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useWordById } from '../../hooks/useWordById.js';
 import { Card } from '../../components/Card/Card.jsx';
 // import { FlipCard } from '../../components/FlipCard/FlipCard.jsx';
 // FlipCard looks better but doesn't use state as required.
 // To see also need to change Card into FlipCard in return
-import styles from '../../styles/CardsPage.module.scss';
 import { Spinner } from '../../components/Spinner/Spinner.jsx';
 import { Button } from '../../components/Button/Button.jsx';
+import styles from '../../styles/CardsPage.module.scss';
 
 export const CardsPage = ({ stateWords, selectedLanguage }) => {
     const [currentWordId, setCurrentWordId] = useState('');
@@ -20,15 +21,12 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
         return <Spinner message="No words available" />;
     }
 
-    const getCurrentWordById = (wordId) => {
-        return stateWords.words.find((word) => word.id === wordId) || {};
-    };
-    const currentWord = getCurrentWordById(currentWordId);
-
     useEffect(() => {
         setCurrentWordId(stateWords.words[0]?.id || '');
         setLearnedWords([]);
     }, [stateWords]);
+
+    const currentWord = useWordById(stateWords.words, currentWordId);
 
     const goToPreviousCard = () => {
         const currentIndex = stateWords.words.findIndex((word) => word.id === currentWordId);
@@ -56,23 +54,37 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
         }
     };
 
+    const handleKeyPress = (event) => {
+        if (event.code === 'ArrowLeft') {
+            goToPreviousCard();
+        } else if (event.code === 'ArrowRight') {
+            goToNextCard();
+        }
+    };
+
     useEffect(() => {
-        const handleKeyPress = (event) => {
-            if (event.code === 'ArrowLeft') {
-                goToPreviousCard();
-            } else if (event.code === 'ArrowRight') {
-                goToNextCard();
-            }
-        };
+        setCurrentWordId(stateWords.words[0]?.id || '');
+        setLearnedWords([]);
+    }, [stateWords]);
+
+    useEffect(() => {
         window.addEventListener('keydown', handleKeyPress);
         return () => {
             window.removeEventListener('keydown', handleKeyPress);
         };
-    }, [goToPreviousCard, goToNextCard]);
+    }, [handleKeyPress]);
 
     const resetWordsCount = () => {
-        localStorage.setItem(learnedWordsKey, 0);
+        localStorage.removeItem(learnedWordsKey);
         setRestartCounter((prevState) => !prevState);
+    };
+
+    const learnedWordsMessage = () => {
+        if (learnedWordsForLanguage === wordsCount) {
+            return `Congratulations, you've learned all ${wordsCount} words in this set`;
+        } else {
+            return `You've learned ${learnedWordsForLanguage} ${learnedWordsForLanguage === 1 ? 'word' : 'words'} out of ${wordsCount}`;
+        }
     };
 
     if (!currentWord || typeof currentWord !== 'object') {
@@ -100,7 +112,7 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
                     ›
                 </button>
             </div>
-            <div className={styles.counter}>{learnedWordsForLanguage === wordsCount ? `Congratulations, you've learned all ${wordsCount} words in this set` : `You've learned ${learnedWordsForLanguage} ${learnedWordsForLanguage === 1 ? 'word' : 'words'} out of ${wordsCount}`}</div>
+            <div className={styles.counter}>{learnedWordsMessage()}</div>
             <Button
                 customClass={styles.restart_button}
                 name="start over"
