@@ -5,13 +5,16 @@ import { Card } from '../../components/Card/Card.jsx';
 // To see also need to change Card into FlipCard in return
 import styles from '../../styles/CardsPage.module.scss';
 import { Spinner } from '../../components/Spinner/Spinner.jsx';
+import { Button } from '../../components/Button/Button.jsx';
 
-export const CardsPage = ({ stateWords }) => {
+export const CardsPage = ({ stateWords, selectedLanguage }) => {
     const [currentWordId, setCurrentWordId] = useState('');
-    const [isFinished, setIsFinished] = useState(false);
-    const [learnedWords, setLearnedWords] = useState(0);
-    const [learnedWordsList, setLearnedWordsList] = useState([]);
+    const [learnedWords, setLearnedWords] = useState([]);
+    const [restartCounter, setRestartCounter] = useState(false);
+
     const wordsCount = stateWords.words.length;
+    const learnedWordsKey = `learnedWords_${selectedLanguage}`;
+    const learnedWordsForLanguage = parseInt(localStorage.getItem(learnedWordsKey)) || 0;
 
     if (wordsCount === 0) {
         return <Spinner message="No words available" />;
@@ -20,12 +23,11 @@ export const CardsPage = ({ stateWords }) => {
     const getCurrentWordById = (wordId) => {
         return stateWords.words.find((word) => word.id === wordId) || {};
     };
+    const currentWord = getCurrentWordById(currentWordId);
 
     useEffect(() => {
         setCurrentWordId(stateWords.words[0]?.id || '');
-        setLearnedWordsList([]);
-        setLearnedWords(0);
-        setIsFinished(false);
+        setLearnedWords([]);
     }, [stateWords]);
 
     const goToPreviousCard = () => {
@@ -41,20 +43,18 @@ export const CardsPage = ({ stateWords }) => {
     };
 
     const countLearnedWords = () => {
-        if (!learnedWordsList.includes(currentWordId)) {
-            const updatedLearnedWordsList = [...learnedWordsList, currentWordId];
-            setLearnedWordsList(updatedLearnedWordsList);
+        if (!learnedWords.includes(currentWordId)) {
+            const updatedLearnedWords = [...learnedWords, currentWordId];
 
-            if (updatedLearnedWordsList.length === wordsCount) {
-                setIsFinished(true);
-            } else {
-                setLearnedWords(learnedWords + 1);
-                localStorage.setItem('learnedWords', (learnedWords + 1).toString());
+            if (updatedLearnedWords.length <= wordsCount) {
+                setLearnedWords(updatedLearnedWords);
+
+                const learnedWordsForLanguage = parseInt(localStorage.getItem(learnedWordsKey)) || 0;
+                const newLearnedWordsCount = Math.min(learnedWordsForLanguage + 1, wordsCount);
+                localStorage.setItem(learnedWordsKey, newLearnedWordsCount.toString());
             }
         }
     };
-
-    const currentWord = getCurrentWordById(currentWordId);
 
     useEffect(() => {
         const handleKeyPress = (event) => {
@@ -69,6 +69,11 @@ export const CardsPage = ({ stateWords }) => {
             window.removeEventListener('keydown', handleKeyPress);
         };
     }, [goToPreviousCard, goToNextCard]);
+
+    const resetWordsCount = () => {
+        localStorage.setItem(learnedWordsKey, 0);
+        setRestartCounter((prevState) => !prevState);
+    };
 
     if (!currentWord || typeof currentWord !== 'object') {
         return <Spinner message="Invalid word data" />;
@@ -95,7 +100,12 @@ export const CardsPage = ({ stateWords }) => {
                     ›
                 </button>
             </div>
-            <div className={styles.counter}>{isFinished ? `Congratulations, you've learned all ${wordsCount} words in this set` : `You've learned ${learnedWords} ${learnedWords === 1 ? 'word' : 'words'} out of ${wordsCount}`}</div>
+            <div className={styles.counter}>{learnedWordsForLanguage === wordsCount ? `Congratulations, you've learned all ${wordsCount} words in this set` : `You've learned ${learnedWordsForLanguage} ${learnedWordsForLanguage === 1 ? 'word' : 'words'} out of ${wordsCount}`}</div>
+            <Button
+                customClass={styles.restart_button}
+                name="start over"
+                onClick={() => resetWordsCount()}
+            />
         </main>
     );
 };

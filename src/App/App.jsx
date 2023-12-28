@@ -34,7 +34,6 @@ function App() {
             setWords(languages[language]);
             setSelectedLanguage(language);
             localStorage.setItem('language', language);
-            localStorage.setItem('learnedWords', '0');
         }
     };
 
@@ -69,7 +68,12 @@ function App() {
                     />
                     <Route
                         path="/cards"
-                        element={<CardsPage stateWords={stateWords} />}
+                        element={
+                            <CardsPage
+                                stateWords={stateWords}
+                                selectedLanguage={selectedLanguage}
+                            />
+                        }
                     />
                     <Route
                         path="*"
