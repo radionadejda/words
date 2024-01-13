@@ -46,3 +46,48 @@ $graffiti: 'Graffiti';
 @mixin transcription {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+@mixin row_container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5vh;
+}
+
+@mixin row {
+    display: flex;
+    align-items: center;
+    height: min-content;
+    padding: 1vh;
+    justify-content: space-around;
+    border-radius: 0.3rem;
+    color: $text;
+}
+
+@mixin row_word {
+    min-width: 25%;
+    font-family: $graffiti-shadow;
+}
+
+@mixin row_description {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-width: 50%;
+    @media (max-width: $medium) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+}
+
+@mixin row_buttons {
+    display: flex;
+    min-width: 25%;
+    justify-content: center;
+    @media (max-width: $mobile) {
+        flex-direction: column;
+    }
+}
+
+@mixin row_button {
+    min-width: 48%;
+    margin: 2%;
+}

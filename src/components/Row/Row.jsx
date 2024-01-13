@@ -30,29 +30,32 @@ export const Row = (props) => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.row_container}>
             <div className={`${styles.row} ${isHeading ? styles.heading : ''}`}>
-                <h2 className={styles.word}>{english}</h2>
-                <div className={styles.description}>
+                <h2 className={styles.row_word}>{english}</h2>
+                <div className={styles.row_description}>
                     <div className={styles.transcription}>{transcription}</div>
                     <div className={styles.answer}>{russian}</div>
                     <div className={styles.tags}>{tags}</div>
                 </div>
                 {isHeading ? (
-                    <div className={styles.edit}>
+                    <div className={styles.row_buttons}>
                         <Button
                             name="add"
+                            customClass={styles.row_button}
                             onClick={() => handleWordEdit('add')}
                         />
                     </div>
                 ) : (
-                    <div className={styles.edit}>
+                    <div className={styles.row_buttons}>
                         <Button
                             name="edit"
+                            customClass={styles.row_button}
                             onClick={() => handleWordEdit('edit')}
                         />
                         <Button
                             name="remove"
+                            customClass={styles.row_button}
                             onClick={() => handleWordEdit('remove')}
                         />
                     </div>

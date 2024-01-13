@@ -1,54 +1,35 @@
 @import '../../styles/vars';
 
-.container {
-    display: flex;
-    flex-direction: column;
+.row_container {
+    @include row_container;
+}
+
+.heading {
+    border-radius: 0;
+    border-bottom: 1px solid $accent2;
+    &:hover {
+        background-color: rgba($accent2, 0);
+    }
 }
 
 .row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: min-content;
-    padding: 1vh;
-    justify-content: space-around;
-    border-radius: 0.3rem;
-    color: $text;
+    @include row;
     &:hover {
         transition: 0.5s;
         background-color: rgba($accent2, 0.2);
     }
 }
 
-.word {
-    min-width: 25%;
-    font-family: $graffiti-shadow;
+.row_word {
+    @include row_word;
 }
 
-.description {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    min-width: 55%;
-    @media (max-width: $medium) {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-    }
+.row_description {
+    @include row_description;
 }
 
-.edit {
-    display: flex;
-    min-width: 20%;
-    justify-content: center;
-    gap: 2%;
-}
-
-.heading {
-    border-radius: 0;
-    font-weight: bold;
-    border-bottom: 1px solid $accent2;
-    &:hover {
-        background-color: rgba($accent2, 0);
-    }
+.row_buttons {
+    @include row_buttons;
 }
 
 .hide {
@@ -57,4 +38,8 @@
 
 .transcription {
     @include transcription;
+}
+
+.row_button {
+    @include row_button;
 }
