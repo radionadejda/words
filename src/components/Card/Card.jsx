@@ -18,7 +18,7 @@ export const Card = ({ word, countLearnedWords, showTranslation, setShowTranslat
     const translateButtonRef = useRef(null);
     useEffect(() => {
         translateButtonRef.current.focus();
-    }, [word]); // тут мог быть пустой массив, чтобы обновление фокуса происходило при каждом рендере, но тогда фокус не переставляется при смене набора слов. удалю коммент после проверки
+    }, [word]);
 
     return (
         <div className={styles.card}>

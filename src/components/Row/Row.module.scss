@@ -1,7 +1,19 @@
 @import '../../styles/vars';
 
+@mixin row {
+    display: flex;
+    align-items: center;
+    height: min-content;
+    padding: 1vh;
+    justify-content: space-around;
+    border-radius: 0.3rem;
+    color: $text;
+}
+
 .row_container {
-    @include row_container;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5vh;
 }
 
 .heading {
@@ -20,20 +32,34 @@
     }
 }
 
+.row_form {
+    @include row;
+    background-color: rgba($accent2, 0.2);
+    border: 1px solid $accent2;
+}
+
 .row_word {
-    @include row_word;
+    min-width: 25%;
+    font-family: $graffiti-shadow;
 }
 
 .row_description {
-    @include row_description;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-width: 50%;
+    @media (max-width: $medium) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
 }
 
 .row_buttons {
-    @include row_buttons;
-}
-
-.hide {
-    display: none;
+    display: flex;
+    min-width: 25%;
+    justify-content: center;
+    @media (max-width: $mobile) {
+        flex-direction: column;
+    }
 }
 
 .transcription {
@@ -41,5 +67,7 @@
 }
 
 .row_button {
-    @include row_button;
+    min-width: 48%;
+    margin: 2%;
+    text-wrap: wrap;
 }
