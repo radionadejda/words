@@ -1,13 +1,18 @@
 @import '../../styles/vars';
 
 @mixin row {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
     height: min-content;
     padding: 1vh;
     justify-content: space-around;
+    align-items: center;
     border-radius: 0.3rem;
     color: $text;
+    @media (max-width: $medium) {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 3%;
+    }
 }
 
 .row_container {
@@ -32,32 +37,29 @@
     }
 }
 
-.row_form {
-    @include row;
-    background-color: rgba($accent2, 0.2);
-    border: 1px solid $accent2;
-}
-
 .row_word {
-    min-width: 25%;
     font-family: $graffiti-shadow;
+    font-size: 1.5rem;
 }
 
 .row_description {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    min-width: 50%;
+    gap: 1%;
+    padding: 0 1%;
+    height: 100%;
+    align-items: center;
     @media (max-width: $medium) {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr;
+        gap: 3%;
     }
 }
 
 .row_buttons {
     display: flex;
-    min-width: 25%;
     justify-content: center;
-    @media (max-width: $mobile) {
+    @media (max-width: $medium) {
         flex-direction: column;
     }
 }
@@ -68,6 +70,31 @@
 
 .row_button {
     min-width: 48%;
+    min-height: max-content;
     margin: 2%;
     text-wrap: wrap;
+}
+
+.row_form {
+    @include row;
+    background-color: rgba($accent2, 0.2);
+    border: 1px solid $accent2;
+}
+
+.row_input {
+    width: 90%;
+    height: 60%;
+    border-radius: 0.3rem;
+    outline: none;
+    border: 1px solid $accent2;
+    background-color: rgba($accent2, 0.2);
+    padding: 1% 5%;
+
+    @media (max-width: $medium) {
+        height: 100%;
+    }
+}
+
+::placeholder {
+    color: $text;
 }

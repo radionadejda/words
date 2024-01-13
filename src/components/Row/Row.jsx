@@ -6,14 +6,27 @@ export const Row = (props) => {
     const { english, transcription, russian, tags } = props.word;
     const isHeading = props.isHeading || false;
 
+    const [newWord, setNewWord] = useState('');
+    const [newTranscription, setNewTranscription] = useState('');
+    const [newTranslation, setNewTranslation] = useState('');
+    const [newTags, setNewTags] = useState('');
+
     const [action, setAction] = useState(null);
 
     const handleFormSwitch = (newAction) => {
         setAction(newAction);
     };
 
-    const handleWordEdit = (type) => {
-        console.log(type);
+    const addWord = () => {
+        console.log('word added');
+    };
+
+    const removeWord = () => {
+        console.log('word removed');
+    };
+
+    const editWord = () => {
+        console.log('word edited');
     };
 
     const renderContent = () => {
@@ -31,17 +44,48 @@ export const Row = (props) => {
                             <div className={styles.row_buttons}></div>
                         </div>
                         <div className={styles.row_form}>
-                            <h2 className={styles.row_word}>ADD WORD</h2>
+                            <input
+                                type="text"
+                                placeholder="ADD WORD"
+                                required
+                                name="wordInput"
+                                value={newWord}
+                                onChange={(e) => setNewWord(e.target.value)}
+                                className={`${styles.row_word} ${styles.row_input}`}></input>
                             <div className={styles.row_description}>
-                                <div className={styles.transcription}>add transcription</div>
-                                <div className={styles.answer}>add translation</div>
-                                <div className={styles.tags}>add tags</div>
+                                <input
+                                    type="text"
+                                    placeholder="add transcription"
+                                    required
+                                    name="transcriptionInput"
+                                    value={newTranscription}
+                                    onChange={(e) => setNewTranscription(e.target.value)}
+                                    className={`${styles.transcription} ${styles.row_input}`}></input>
+                                <input
+                                    type="text"
+                                    placeholder="add translation"
+                                    required
+                                    name="translationInput"
+                                    value={newTranslation}
+                                    onChange={(e) => setNewTranslation(e.target.value)}
+                                    className={`${styles.translation} ${styles.row_input}`}></input>
+                                <input
+                                    type="text"
+                                    placeholder="add tags"
+                                    required
+                                    name="tagsInput"
+                                    value={newTags}
+                                    onChange={(e) => setNewTags(e.target.value)}
+                                    className={`${styles.tags} ${styles.row_input}`}></input>
                             </div>
                             <div className={styles.row_buttons}>
                                 <Button
+                                    type="submit"
                                     name="add"
                                     customClass={styles.row_button}
-                                    onClick={() => handleWordEdit('add')}
+                                    onClick={() => {
+                                        addWord();
+                                    }}
                                 />
                                 <Button
                                     name="cancel + close"
@@ -55,17 +99,47 @@ export const Row = (props) => {
             case 'edit':
                 return (
                     <div className={styles.row_form}>
-                        <h2 className={styles.row_word}>edit {english}</h2>
+                        <input
+                            type="text"
+                            placeholder={english ? english : 'add word'}
+                            required
+                            name="wordInput"
+                            value={newWord}
+                            onChange={(e) => setNewWord(e.target.value)}
+                            className={`${styles.row_word} ${styles.row_input}`}></input>
                         <div className={styles.row_description}>
-                            <div className={styles.transcription}> edit {transcription}</div>
-                            <div className={styles.answer}>edit {russian}</div>
-                            <div className={styles.tags}>edit {tags}</div>
+                            <input
+                                type="text"
+                                placeholder={transcription ? transcription : 'add transcription'}
+                                required
+                                name="transcriptionInput"
+                                value={newTranscription}
+                                onChange={(e) => setNewTranscription(e.target.value)}
+                                className={`${styles.transcription} ${styles.row_input}`}></input>
+                            <input
+                                type="text"
+                                placeholder={russian ? russian : 'add translation'}
+                                required
+                                name="translationInput"
+                                value={newTranslation}
+                                onChange={(e) => setNewTranslation(e.target.value)}
+                                className={`${styles.translation} ${styles.row_input}`}></input>
+                            <input
+                                type="text"
+                                placeholder={tags ? tags : 'add tags'}
+                                required
+                                name="tagsInput"
+                                value={newTags}
+                                onChange={(e) => setNewTags(e.target.value)}
+                                className={`${styles.tags} ${styles.row_input}`}></input>
                         </div>
                         <div className={styles.row_buttons}>
                             <Button
                                 name="save edit"
                                 customClass={styles.row_button}
-                                onClick={() => handleWordEdit('edit')}
+                                onClick={() => {
+                                    editWord();
+                                }}
                             />
                             <Button
                                 name="cancel + close"
@@ -79,12 +153,14 @@ export const Row = (props) => {
                 return (
                     <div className={styles.row_form}>
                         <h2 className={styles.row_word}>{english}</h2>
-                        <div className={styles.row_description}>Are u sure u want to remove this word?</div>
+                        <div className={styles.row_message}>Are you sure you want to remove this word?</div>
                         <div className={styles.row_buttons}>
                             <Button
                                 name="remove word"
                                 customClass={styles.row_button}
-                                onClick={() => handleWordEdit('remove')}
+                                onClick={() => {
+                                    removeWord();
+                                }}
                             />
                             <Button
                                 name="cancel + close"
