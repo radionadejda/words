@@ -73,6 +73,9 @@
     min-height: max-content;
     margin: 2%;
     text-wrap: wrap;
+    &:disabled {
+        background-color: red;
+    }
 }
 
 .row_form {
@@ -96,5 +99,9 @@
 }
 
 ::placeholder {
-    color: $text;
+    color: rgba($text, 0.6);
+}
+
+.error {
+    border: 2px solid red;
 }

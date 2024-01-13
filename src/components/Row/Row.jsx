@@ -2,31 +2,79 @@ import { useState } from 'react';
 import { Button } from '../Button/Button';
 import styles from './Row.module.scss';
 
-export const Row = (props) => {
-    const { english, transcription, russian, tags } = props.word;
-    const isHeading = props.isHeading || false;
-
-    const [newWord, setNewWord] = useState('');
-    const [newTranscription, setNewTranscription] = useState('');
-    const [newTranslation, setNewTranslation] = useState('');
-    const [newTags, setNewTags] = useState('');
+export const Row = ({ word, isHeading = false }) => {
+    const { english, transcription, russian, tags } = word;
 
     const [action, setAction] = useState(null);
+
+    const [newWord, setNewWord] = useState(english || '');
+    const [newTranscription, setNewTranscription] = useState(transcription || '');
+    const [newTranslation, setNewTranslation] = useState(russian || '');
+    const [newTags, setNewTags] = useState(tags || '');
+
+    const [inputValidations, setInputValidations] = useState({
+        isWordValid: true,
+        isTranscriptionValid: true,
+        isTranslationValid: true,
+        isTagsValid: true
+    });
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const handleFormSwitch = (newAction) => {
         setAction(newAction);
     };
 
-    const addWord = () => {
-        console.log('word added');
+    const handleCancel = () => {
+        setNewWord(english || '');
+        setNewTranscription(transcription || '');
+        setNewTranslation(russian || '');
+        setNewTags(tags || '');
+        setAction(null);
+    };
+
+    const validateInputs = () => {
+        setInputValidations({
+            isWordValid: newWord.trim() !== '',
+            isTranscriptionValid: newTranscription.trim() !== '',
+            isTranslationValid: newTranslation.trim() !== '',
+            isTagsValid: newTags.trim() !== ''
+        });
+
+        const areInputsValid = Object.values(inputValidations).every(Boolean);
+        setIsButtonDisabled(!areInputsValid);
+
+        return areInputsValid;
     };
 
     const removeWord = () => {
         console.log('word removed');
     };
 
-    const editWord = () => {
-        console.log('word edited');
+    const handleAddEdit = (action) => {
+        if (validateInputs()) {
+            const wordObject = {
+                id: '14836', // how to generate a unique ID?
+                english: newWord,
+                transcription: newTranscription,
+                russian: newTranslation,
+                tags: newTags,
+                tags_json: '["' + newTags + '"]'
+            };
+
+            switch (action) {
+                case 'add':
+                    console.log('word added', wordObject);
+                    break;
+                case 'edit':
+                    console.log('word edited', wordObject);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            console.error('Please fill in all required fields.');
+        }
     };
 
     const renderContent = () => {
@@ -83,14 +131,15 @@ export const Row = (props) => {
                                     type="submit"
                                     name="add"
                                     customClass={styles.row_button}
+                                    disabled={isButtonDisabled}
                                     onClick={() => {
-                                        addWord();
+                                        handleAddEdit();
                                     }}
                                 />
                                 <Button
                                     name="cancel + close"
                                     customClass={styles.row_button}
-                                    onClick={() => setAction(null)}
+                                    onClick={handleCancel}
                                 />
                             </div>
                         </div>
@@ -137,14 +186,15 @@ export const Row = (props) => {
                             <Button
                                 name="save edit"
                                 customClass={styles.row_button}
+                                disabled={isButtonDisabled}
                                 onClick={() => {
-                                    editWord();
+                                    handleAddEdit();
                                 }}
                             />
                             <Button
                                 name="cancel + close"
                                 customClass={styles.row_button}
-                                onClick={() => setAction(null)}
+                                onClick={handleCancel}
                             />
                         </div>
                     </div>
@@ -165,7 +215,7 @@ export const Row = (props) => {
                             <Button
                                 name="cancel + close"
                                 customClass={styles.row_button}
-                                onClick={() => setAction(null)}
+                                onClick={handleCancel}
                             />
                         </div>
                     </div>
