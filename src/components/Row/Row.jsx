@@ -7,10 +7,12 @@ export const Row = ({ word, isHeading = false }) => {
 
     const [action, setAction] = useState(null);
 
-    const [newWord, setNewWord] = useState(english || '');
-    const [newTranscription, setNewTranscription] = useState(transcription || '');
-    const [newTranslation, setNewTranslation] = useState(russian || '');
-    const [newTags, setNewTags] = useState(tags || '');
+    const [formData, setFormData] = useState({
+        word: english || '',
+        transcription: transcription || '',
+        translation: russian || '',
+        tags: tags || ''
+    });
 
     const [inputValidations, setInputValidations] = useState({
         isWordValid: true,
@@ -26,49 +28,49 @@ export const Row = ({ word, isHeading = false }) => {
     };
 
     const handleCancel = () => {
-        setNewWord(english || '');
-        setNewTranscription(transcription || '');
-        setNewTranslation(russian || '');
-        setNewTags(tags || '');
+        setFormData({
+            word: english || '',
+            transcription: transcription || '',
+            translation: russian || '',
+            tags: tags || ''
+        });
         setAction(null);
     };
 
+    useEffect(() => {
+        const areInputsValid = action === 'remove' || (Object.values(inputValidations).every(Boolean) && Object.values(formData).every((value) => value.trim() !== ''));
+        setIsButtonDisabled(!areInputsValid);
+    }, [action, inputValidations, formData]);
+
     const validateInputs = () => {
+        if (action === 'remove') {
+            setIsButtonDisabled(false);
+            return true;
+        }
+
         setInputValidations({
-            isWordValid: newWord.trim() !== '',
-            isTranscriptionValid: newTranscription.trim() !== '',
-            isTranslationValid: newTranslation.trim() !== '',
-            isTagsValid: newTags.trim() !== ''
+            isWordValid: formData.word.trim() !== '',
+            isTranscriptionValid: formData.transcription.trim() !== '',
+            isTranslationValid: formData.translation.trim() !== '',
+            isTagsValid: formData.tags.trim() !== ''
         });
 
-        const areInputsValid = Object.values(inputValidations).every(Boolean);
-        setIsButtonDisabled(!areInputsValid);
-        console.log('is button disabled in inputVlidations?' + isButtonDisabled);
-        return areInputsValid;
+        return false;
     };
 
     useEffect(() => {
         validateInputs();
-    }, []);
+    }, [formData]);
 
-    useEffect(() => {
-        validateInputs();
-    }, [newWord, newTranscription, newTranslation, newTags]);
-
-    const removeWord = () => {
-        console.log(`word id ${id} ${english} removed`);
-    };
-
-    const handleAddEdit = (action) => {
-        console.log('is button disabled in handleAddEdit?' + isButtonDisabled);
+    const handleWord = () => {
         if (validateInputs()) {
             const wordObject = {
-                id: '14836', // how to generate a unique ID?
-                english: newWord,
-                transcription: newTranscription,
-                russian: newTranslation,
-                tags: newTags,
-                tags_json: '["' + newTags + '"]'
+                id: id || 'noid', // how to generate a unique ID?
+                english: formData.word,
+                transcription: formData.transcription,
+                russian: formData.translation,
+                tags: formData.tags,
+                tags_json: '["' + formData.tags + '"]'
             };
 
             switch (action) {
@@ -78,191 +80,137 @@ export const Row = ({ word, isHeading = false }) => {
                 case 'edit':
                     console.log('word edited', wordObject);
                     break;
+                case 'remove':
+                    console.log(`word id ${id} ${english} removed`);
+                    break;
                 default:
                     break;
             }
+            setAction(null);
         } else {
             console.error('Please fill in all required fields.');
         }
     };
 
-    const renderContent = () => {
-        switch (action) {
-            case 'add':
-                return (
-                    <div>
-                        <div className={`${styles.row} ${styles.heading}`}>
-                            <h2 className={styles.row_word}>{english}</h2>
-                            <div className={styles.row_description}>
-                                <div className={styles.transcription}>{transcription}</div>
-                                <div className={styles.answer}>{russian}</div>
-                                <div className={styles.tags}>{tags}</div>
-                            </div>
-                            <div className={styles.row_buttons}></div>
-                        </div>
-                        <div className={styles.row_form}>
-                            <input
-                                type="text"
-                                placeholder="ADD WORD"
-                                required
-                                name="wordInput"
-                                value={newWord}
-                                onChange={(e) => setNewWord(e.target.value)}
-                                className={`${styles.row_word} ${styles.row_input} ${inputValidations.isWordValid ? '' : styles.error}`}></input>
-                            <div className={styles.row_description}>
-                                <input
-                                    type="text"
-                                    placeholder="add transcription"
-                                    required
-                                    name="transcriptionInput"
-                                    value={newTranscription}
-                                    onChange={(e) => setNewTranscription(e.target.value)}
-                                    className={`${styles.transcription} ${styles.row_input} ${inputValidations.isTranscriptionValid ? '' : styles.error}`}></input>
-                                <input
-                                    type="text"
-                                    placeholder="add translation"
-                                    required
-                                    name="translationInput"
-                                    value={newTranslation}
-                                    onChange={(e) => setNewTranslation(e.target.value)}
-                                    className={`${styles.translation} ${styles.row_input} ${inputValidations.isTranslationValid ? '' : styles.error}`}></input>
-                                <input
-                                    type="text"
-                                    placeholder="add tags"
-                                    required
-                                    name="tagsInput"
-                                    value={newTags}
-                                    onChange={(e) => setNewTags(e.target.value)}
-                                    className={`${styles.tags} ${styles.row_input} ${inputValidations.isTagsValid ? '' : styles.error}`}></input>
-                            </div>
-                            <div className={styles.row_buttons}>
-                                <Button
-                                    type="submit"
-                                    name="add"
-                                    customClass={`${styles.row_button} ${isButtonDisabled ? styles.error : ''}`}
-                                    disabled={isButtonDisabled}
-                                    onClick={() => {
-                                        handleAddEdit();
-                                    }}
-                                />
-                                <Button
-                                    name="cancel + close"
-                                    customClass={styles.row_button}
-                                    onClick={handleCancel}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                );
-            case 'edit':
-                return (
-                    <div className={styles.row_form}>
-                        <input
-                            type="text"
-                            placeholder={english ? english : 'add word'}
-                            required
-                            name="wordInput"
-                            value={newWord}
-                            onChange={(e) => setNewWord(e.target.value)}
-                            className={`${styles.row_word} ${styles.row_input} ${inputValidations.isWordValid ? '' : styles.error}`}></input>
-                        <div className={styles.row_description}>
-                            <input
-                                type="text"
-                                placeholder={transcription ? transcription : 'add transcription'}
-                                required
-                                name="transcriptionInput"
-                                value={newTranscription}
-                                onChange={(e) => setNewTranscription(e.target.value)}
-                                className={`${styles.transcription} ${styles.row_input} ${inputValidations.isTranscriptionValid ? '' : styles.error}`}></input>
-                            <input
-                                type="text"
-                                placeholder={russian ? russian : 'add translation'}
-                                required
-                                name="translationInput"
-                                value={newTranslation}
-                                onChange={(e) => setNewTranslation(e.target.value)}
-                                className={`${styles.translation} ${styles.row_input} ${inputValidations.isTranslationValid ? '' : styles.error}`}></input>
-                            <input
-                                type="text"
-                                placeholder={tags ? tags : 'add tags'}
-                                required
-                                name="tagsInput"
-                                value={newTags}
-                                onChange={(e) => setNewTags(e.target.value)}
-                                className={`${styles.tags} ${styles.row_input} ${inputValidations.isTagsValid ? '' : styles.error}`}></input>
-                        </div>
-                        <div className={styles.row_buttons}>
-                            <Button
-                                name="save edit"
-                                customClass={`${styles.row_button} ${isButtonDisabled ? styles.error : ''}`}
-                                disabled={isButtonDisabled}
-                                onClick={() => {
-                                    handleAddEdit();
-                                }}
-                            />
-                            <Button
-                                name="cancel + close"
-                                customClass={styles.row_button}
-                                onClick={handleCancel}
-                            />
-                        </div>
-                    </div>
-                );
-            case 'remove':
-                return (
-                    <div className={styles.row_form}>
-                        <h2 className={styles.row_word}>{english}</h2>
-                        <div className={styles.row_message}>Are you sure you want to remove this word?</div>
-                        <div className={styles.row_buttons}>
-                            <Button
-                                name="remove word"
-                                customClass={styles.row_button}
-                                onClick={() => {
-                                    removeWord();
-                                }}
-                            />
-                            <Button
-                                name="cancel + close"
-                                customClass={styles.row_button}
-                                onClick={handleCancel}
-                            />
-                        </div>
-                    </div>
-                );
-            default:
-                return (
-                    <div className={`${styles.row} ${isHeading ? styles.heading : ''}`}>
+    const renderFormFields = () => {
+        const isActionAdd = action === 'add';
+        const isActionRemove = action === 'remove';
+
+        return (
+            <div className={styles.row_container}>
+                {isActionAdd && (
+                    <div className={`${styles.row} ${styles.heading}`}>
                         <h2 className={styles.row_word}>{english}</h2>
                         <div className={styles.row_description}>
                             <div className={styles.transcription}>{transcription}</div>
                             <div className={styles.answer}>{russian}</div>
                             <div className={styles.tags}>{tags}</div>
                         </div>
-                        {isHeading ? (
-                            <div className={styles.row_buttons}>
-                                <Button
-                                    name="add"
-                                    customClass={styles.row_button}
-                                    onClick={() => handleFormSwitch('add')}
-                                />
-                            </div>
-                        ) : (
-                            <div className={styles.row_buttons}>
-                                <Button
-                                    name="edit"
-                                    customClass={styles.row_button}
-                                    onClick={() => handleFormSwitch('edit')}
-                                />
-                                <Button
-                                    name="remove"
-                                    customClass={styles.row_button}
-                                    onClick={() => handleFormSwitch('remove')}
-                                />
-                            </div>
-                        )}
                     </div>
-                );
+                )}
+                <div className={styles.row_form}>
+                    {isActionRemove ? (
+                        <h2 className={styles.row_word}>{english}</h2>
+                    ) : (
+                        <input
+                            type="text"
+                            placeholder="add word"
+                            required
+                            name="wordInput"
+                            value={formData.word}
+                            onChange={(e) => setFormData({ ...formData, word: e.target.value })}
+                            className={`${styles.row_word} ${styles.row_input} ${inputValidations.isWordValid ? '' : styles.error}`}
+                        />
+                    )}
+                    {isActionRemove ? (
+                        <div className={styles.row_remove}>are you sure, this can't be undone</div>
+                    ) : (
+                        <div className={styles.row_description}>
+                            <input
+                                type="text"
+                                placeholder={`add transcription`}
+                                required
+                                name="transcriptionInput"
+                                value={formData.transcription}
+                                onChange={(e) => setFormData({ ...formData, transcription: e.target.value })}
+                                className={`${styles.transcription} ${styles.row_input} ${inputValidations.isTranscriptionValid ? '' : styles.error}`}
+                            />
+                            <input
+                                type="text"
+                                placeholder={`add translation`}
+                                required
+                                name="translationInput"
+                                value={formData.translation}
+                                onChange={(e) => setFormData({ ...formData, translation: e.target.value })}
+                                className={`${styles.translation} ${styles.row_input} ${inputValidations.isTranslationValid ? '' : styles.error}`}
+                            />
+                            <input
+                                type="text"
+                                placeholder={`add tags`}
+                                required
+                                name="tagsInput"
+                                value={formData.tags}
+                                onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                                className={`${styles.tags} ${styles.row_input} ${inputValidations.isTagsValid ? '' : styles.error}`}
+                            />
+                        </div>
+                    )}
+                    <div className={styles.row_buttons}>
+                        <Button
+                            name={isActionRemove ? 'remove' : isActionAdd ? 'add' : 'save edit'}
+                            customClass={`${styles.row_button} ${isButtonDisabled ? styles.error : ''}`}
+                            disabled={isButtonDisabled}
+                            onClick={handleWord}
+                        />
+                        <Button
+                            name="cancel + close"
+                            customClass={styles.row_button}
+                            onClick={handleCancel}
+                        />
+                    </div>
+                </div>
+                {isButtonDisabled && <p className={styles.error_message}>Please fill in all required fields.</p>}
+            </div>
+        );
+    };
+
+    const renderContent = () => {
+        if (action !== null) {
+            return renderFormFields();
         }
+
+        return (
+            <div className={`${styles.row} ${isHeading ? styles.heading : ''}`}>
+                <h2 className={styles.row_word}>{english}</h2>
+                <div className={styles.row_description}>
+                    <div className={styles.transcription}>{transcription}</div>
+                    <div className={styles.answer}>{russian}</div>
+                    <div className={styles.tags}>{tags}</div>
+                </div>
+                {isHeading ? (
+                    <div className={styles.row_buttons}>
+                        <Button
+                            name="add"
+                            customClass={styles.row_button}
+                            onClick={() => handleFormSwitch('add')}
+                        />
+                    </div>
+                ) : (
+                    <div className={styles.row_buttons}>
+                        <Button
+                            name="edit"
+                            customClass={styles.row_button}
+                            onClick={() => handleFormSwitch('edit')}
+                        />
+                        <Button
+                            name="remove"
+                            customClass={styles.row_button}
+                            onClick={() => handleFormSwitch('remove')}
+                        />
+                    </div>
+                )}
+            </div>
+        );
     };
 
     return <div className={styles.row_container}>{renderContent()}</div>;

@@ -56,6 +56,10 @@
     }
 }
 
+.row_remove {
+    display: block;
+}
+
 .row_buttons {
     display: flex;
     justify-content: center;
@@ -103,5 +107,9 @@
 }
 
 .error {
-    border: 2px solid red;
+    border: 2px solid $error;
+}
+
+.error_message {
+    color: $error;
 }
