@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../Button/Button';
 import styles from './Row.module.scss';
 
 export const Row = ({ word, isHeading = false }) => {
-    const { english, transcription, russian, tags } = word;
+    const { id, english, transcription, russian, tags } = word;
 
     const [action, setAction] = useState(null);
 
@@ -43,15 +43,24 @@ export const Row = ({ word, isHeading = false }) => {
 
         const areInputsValid = Object.values(inputValidations).every(Boolean);
         setIsButtonDisabled(!areInputsValid);
-
+        console.log('is button disabled in inputVlidations?' + isButtonDisabled);
         return areInputsValid;
     };
 
+    useEffect(() => {
+        validateInputs();
+    }, []);
+
+    useEffect(() => {
+        validateInputs();
+    }, [newWord, newTranscription, newTranslation, newTags]);
+
     const removeWord = () => {
-        console.log('word removed');
+        console.log(`word id ${id} ${english} removed`);
     };
 
     const handleAddEdit = (action) => {
+        console.log('is button disabled in handleAddEdit?' + isButtonDisabled);
         if (validateInputs()) {
             const wordObject = {
                 id: '14836', // how to generate a unique ID?
@@ -99,7 +108,7 @@ export const Row = ({ word, isHeading = false }) => {
                                 name="wordInput"
                                 value={newWord}
                                 onChange={(e) => setNewWord(e.target.value)}
-                                className={`${styles.row_word} ${styles.row_input}`}></input>
+                                className={`${styles.row_word} ${styles.row_input} ${inputValidations.isWordValid ? '' : styles.error}`}></input>
                             <div className={styles.row_description}>
                                 <input
                                     type="text"
@@ -108,7 +117,7 @@ export const Row = ({ word, isHeading = false }) => {
                                     name="transcriptionInput"
                                     value={newTranscription}
                                     onChange={(e) => setNewTranscription(e.target.value)}
-                                    className={`${styles.transcription} ${styles.row_input}`}></input>
+                                    className={`${styles.transcription} ${styles.row_input} ${inputValidations.isTranscriptionValid ? '' : styles.error}`}></input>
                                 <input
                                     type="text"
                                     placeholder="add translation"
@@ -116,7 +125,7 @@ export const Row = ({ word, isHeading = false }) => {
                                     name="translationInput"
                                     value={newTranslation}
                                     onChange={(e) => setNewTranslation(e.target.value)}
-                                    className={`${styles.translation} ${styles.row_input}`}></input>
+                                    className={`${styles.translation} ${styles.row_input} ${inputValidations.isTranslationValid ? '' : styles.error}`}></input>
                                 <input
                                     type="text"
                                     placeholder="add tags"
@@ -124,13 +133,13 @@ export const Row = ({ word, isHeading = false }) => {
                                     name="tagsInput"
                                     value={newTags}
                                     onChange={(e) => setNewTags(e.target.value)}
-                                    className={`${styles.tags} ${styles.row_input}`}></input>
+                                    className={`${styles.tags} ${styles.row_input} ${inputValidations.isTagsValid ? '' : styles.error}`}></input>
                             </div>
                             <div className={styles.row_buttons}>
                                 <Button
                                     type="submit"
                                     name="add"
-                                    customClass={styles.row_button}
+                                    customClass={`${styles.row_button} ${isButtonDisabled ? styles.error : ''}`}
                                     disabled={isButtonDisabled}
                                     onClick={() => {
                                         handleAddEdit();
@@ -155,7 +164,7 @@ export const Row = ({ word, isHeading = false }) => {
                             name="wordInput"
                             value={newWord}
                             onChange={(e) => setNewWord(e.target.value)}
-                            className={`${styles.row_word} ${styles.row_input}`}></input>
+                            className={`${styles.row_word} ${styles.row_input} ${inputValidations.isWordValid ? '' : styles.error}`}></input>
                         <div className={styles.row_description}>
                             <input
                                 type="text"
@@ -164,7 +173,7 @@ export const Row = ({ word, isHeading = false }) => {
                                 name="transcriptionInput"
                                 value={newTranscription}
                                 onChange={(e) => setNewTranscription(e.target.value)}
-                                className={`${styles.transcription} ${styles.row_input}`}></input>
+                                className={`${styles.transcription} ${styles.row_input} ${inputValidations.isTranscriptionValid ? '' : styles.error}`}></input>
                             <input
                                 type="text"
                                 placeholder={russian ? russian : 'add translation'}
@@ -172,7 +181,7 @@ export const Row = ({ word, isHeading = false }) => {
                                 name="translationInput"
                                 value={newTranslation}
                                 onChange={(e) => setNewTranslation(e.target.value)}
-                                className={`${styles.translation} ${styles.row_input}`}></input>
+                                className={`${styles.translation} ${styles.row_input} ${inputValidations.isTranslationValid ? '' : styles.error}`}></input>
                             <input
                                 type="text"
                                 placeholder={tags ? tags : 'add tags'}
@@ -180,12 +189,12 @@ export const Row = ({ word, isHeading = false }) => {
                                 name="tagsInput"
                                 value={newTags}
                                 onChange={(e) => setNewTags(e.target.value)}
-                                className={`${styles.tags} ${styles.row_input}`}></input>
+                                className={`${styles.tags} ${styles.row_input} ${inputValidations.isTagsValid ? '' : styles.error}`}></input>
                         </div>
                         <div className={styles.row_buttons}>
                             <Button
                                 name="save edit"
-                                customClass={styles.row_button}
+                                customClass={`${styles.row_button} ${isButtonDisabled ? styles.error : ''}`}
                                 disabled={isButtonDisabled}
                                 onClick={() => {
                                     handleAddEdit();
