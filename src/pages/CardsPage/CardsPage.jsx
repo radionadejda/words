@@ -9,7 +9,7 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
     const [currentWordId, setCurrentWordId] = useState('');
     const [learnedWords, setLearnedWords] = useState([]);
     const [restartCounter, setRestartCounter] = useState(false);
-    const [showTranslation, setShowTranslation] = useState(false); // New state for translation visibility
+    const [showTranslation, setShowTranslation] = useState(false);
 
     const wordsCount = stateWords.words.length;
     const learnedWordsKey = `learnedWords_${selectedLanguage}`;

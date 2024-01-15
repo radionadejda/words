@@ -42,11 +42,6 @@ export const Row = ({ selectedLanguage, word, isHeading = false }) => {
         setAction(null);
     };
 
-    useEffect(() => {
-        const areInputsValid = action === 'remove' || (Object.values(inputValidations).every(Boolean) && Object.values(formData).every((value) => value.trim() !== ''));
-        setIsButtonDisabled(!areInputsValid);
-    }, [action, inputValidations, formData]);
-
     const validateInputs = () => {
         if (action === 'remove') {
             setIsButtonDisabled(false);
@@ -59,18 +54,19 @@ export const Row = ({ selectedLanguage, word, isHeading = false }) => {
             isTranslationValid: formData.translation.trim() !== '',
             isTagsValid: formData.tags.trim() !== ''
         });
-
-        return false;
+        const areInputsValid = action === 'remove' || (Object.values(inputValidations).every(Boolean) && Object.values(formData).every((value) => value.trim() !== ''));
+        setIsButtonDisabled(!areInputsValid);
+        return areInputsValid;
     };
 
     useEffect(() => {
         validateInputs();
-    }, [formData]);
+    }, [action, formData]);
 
     const handleWord = () => {
         if (validateInputs()) {
             const wordObject = {
-                id: id || 'noid', // how to generate a unique ID?
+                id: id || 'noid', // generate a unique ID?
                 selectedLanguage: formData.word,
                 transcription: formData.transcription,
                 russian: formData.translation,
@@ -91,7 +87,7 @@ export const Row = ({ selectedLanguage, word, isHeading = false }) => {
                 default:
                     break;
             }
-            setAction(null);
+            handleCancel();
         } else {
             console.error('Please fill in all required fields.');
         }
