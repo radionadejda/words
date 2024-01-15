@@ -9,7 +9,9 @@ export const Header = ({ onLanguageChange, selectedLanguage }) => {
     const languages = [
         { value: '', label: 'Pick Language', className: styles.select__option, disabled: true },
         { value: 'english', label: 'English', className: styles.select__option },
-        { value: 'german', label: 'German', className: styles.select__option }
+        { value: 'german', label: 'German', className: styles.select__option },
+        { value: 'french', label: 'French', className: styles.select__option },
+        { value: 'spanish', label: 'Spanish', className: styles.select__option }
     ];
 
     return (
