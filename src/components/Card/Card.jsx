@@ -3,11 +3,8 @@ import { Button } from '../Button/Button';
 import styles from './Card.module.scss';
 
 export const Card = ({ selectedLanguage, word, countLearnedWords, showTranslation, setShowTranslation }) => {
-    const { transcription, russian } = word; //???
-
-    const foreignWord = word[selectedLanguage]; //???
-
-    // const [showTranslation, setShowTranslation] = useState(false);
+    const { transcription, russian } = word;
+    const foreignWord = word[selectedLanguage];
     const [isLearned, setIsLearned] = useState(false);
 
     const toggleTranslation = () => {

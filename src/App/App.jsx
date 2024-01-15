@@ -33,7 +33,11 @@ function App() {
         return (
             <Router>
                 <div className={styles.App}>
-                    <Header />
+                    <Header
+                        onLanguageChange={handleLanguageChange}
+                        selectedLanguage={selectedLanguage}
+                        allWords={allWords}
+                    />
                     <Spinner />
                     <Footer />
                 </div>
@@ -47,6 +51,7 @@ function App() {
                 <Header
                     onLanguageChange={handleLanguageChange}
                     selectedLanguage={selectedLanguage}
+                    allWords={allWords}
                 />
                 <Routes>
                     <Route
@@ -55,7 +60,12 @@ function App() {
                     />
                     <Route
                         path="/list"
-                        element={<ListPage stateWords={stateWords} />}
+                        element={
+                            <ListPage
+                                stateWords={stateWords}
+                                selectedLanguage={selectedLanguage}
+                            />
+                        }
                     />
                     <Route
                         path="/cards"

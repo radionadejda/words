@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { Button } from '../Button/Button';
 import styles from './Row.module.scss';
 
-export const Row = ({ word, isHeading = false }) => {
-    const { id, english, transcription, russian, tags } = word;
+export const Row = ({ selectedLanguage, word, isHeading = false }) => {
+    const { id, transcription, russian, tags } = word;
+    const foreignWord = word[selectedLanguage];
 
     const [action, setAction] = useState(null);
 
     const [formData, setFormData] = useState({
-        word: english || '',
+        word: foreignWord || '',
         transcription: transcription || '',
         translation: russian || '',
         tags: tags || ''
@@ -27,9 +28,13 @@ export const Row = ({ word, isHeading = false }) => {
         setAction(newAction);
     };
 
+    useEffect(() => {
+        handleCancel();
+    }, [selectedLanguage]);
+
     const handleCancel = () => {
         setFormData({
-            word: english || '',
+            word: foreignWord || '',
             transcription: transcription || '',
             translation: russian || '',
             tags: tags || ''
@@ -66,7 +71,7 @@ export const Row = ({ word, isHeading = false }) => {
         if (validateInputs()) {
             const wordObject = {
                 id: id || 'noid', // how to generate a unique ID?
-                english: formData.word,
+                selectedLanguage: formData.word,
                 transcription: formData.transcription,
                 russian: formData.translation,
                 tags: formData.tags,
@@ -81,7 +86,7 @@ export const Row = ({ word, isHeading = false }) => {
                     console.log('word edited', wordObject);
                     break;
                 case 'remove':
-                    console.log(`word id ${id} ${english} removed`);
+                    console.log(`word id ${id} ${foreignWord} removed`);
                     break;
                 default:
                     break;
@@ -100,17 +105,17 @@ export const Row = ({ word, isHeading = false }) => {
             <div className={styles.row_container}>
                 {isActionAdd && (
                     <div className={`${styles.row} ${styles.heading}`}>
-                        <h2 className={styles.row_word}>{english}</h2>
+                        <h2 className={styles.row_word}>{word.headingTitle}</h2>
                         <div className={styles.row_description}>
-                            <div className={styles.transcription}>{transcription}</div>
-                            <div className={styles.answer}>{russian}</div>
-                            <div className={styles.tags}>{tags}</div>
+                            <div className={styles.transcription}>{word.headingTranscription}</div>
+                            <div className={styles.translation}>{word.headingTranslation}</div>
+                            <div className={styles.tags}>{word.headingTags}</div>
                         </div>
                     </div>
                 )}
                 <div className={styles.row_form}>
                     {isActionRemove ? (
-                        <h2 className={styles.row_word}>{english}</h2>
+                        <h2 className={styles.row_word}>{foreignWord}</h2>
                     ) : (
                         <input
                             type="text"
@@ -181,11 +186,11 @@ export const Row = ({ word, isHeading = false }) => {
 
         return (
             <div className={`${styles.row} ${isHeading ? styles.heading : ''}`}>
-                <h2 className={styles.row_word}>{english}</h2>
+                <h2 className={styles.row_word}>{isHeading ? word.headingTitle : foreignWord}</h2>
                 <div className={styles.row_description}>
-                    <div className={styles.transcription}>{transcription}</div>
-                    <div className={styles.answer}>{russian}</div>
-                    <div className={styles.tags}>{tags}</div>
+                    <div className={styles.transcription}>{isHeading ? word.headingTranscription : transcription}</div>
+                    <div className={styles.translation}>{isHeading ? word.headingTranslation : russian}</div>
+                    <div className={styles.tags}>{isHeading ? word.headingTags : tags}</div>
                 </div>
                 {isHeading ? (
                     <div className={styles.row_buttons}>
