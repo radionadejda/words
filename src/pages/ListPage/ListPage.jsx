@@ -10,6 +10,7 @@ export const ListPage = ({ stateWords, selectedLanguage }) => {
                 <Row
                     word={heading}
                     isHeading={true}
+                    selectedLanguage={selectedLanguage}
                 />
                 {stateWords.words.map((word, id) => (
                     <Row

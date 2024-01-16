@@ -67,7 +67,7 @@ export const Row = ({ selectedLanguage, word, isHeading = false }) => {
         if (validateInputs()) {
             const wordObject = {
                 id: id || 'noid', // generate a unique ID?
-                selectedLanguage: formData.word,
+                [selectedLanguage]: formData.word,
                 transcription: formData.transcription,
                 russian: formData.translation,
                 tags: formData.tags,
