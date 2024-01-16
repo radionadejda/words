@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 src/aid
 
+src/styles/rowmixins.scss
