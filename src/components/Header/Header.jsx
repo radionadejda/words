@@ -1,16 +1,23 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
+import { useEffect } from 'react';
 
-export const Header = ({ onLanguageChange, selectedLanguage }) => {
+export const Header = ({ onLanguageChange, selectedLanguage, allWords }) => {
     const changeLanguage = (language) => {
         onLanguageChange(language);
     };
 
-    const languages = [
-        { value: '', label: 'Pick Language', className: styles.select__option, disabled: true },
-        { value: 'english', label: 'English', className: styles.select__option },
-        { value: 'german', label: 'German', className: styles.select__option }
-    ];
+    const keysToFilterOut = ['id', 'transcription', 'russian', 'tags', 'tags_json'];
+
+    const getUniqueLanguages = () => {
+        const uniqueLanguagesSet = new Set(allWords.flatMap((word) => Object.keys(word).filter((key) => !keysToFilterOut.includes(key))));
+
+        return [...uniqueLanguagesSet];
+    };
+
+    const uniqueLanguages = getUniqueLanguages();
+
+    const languages = [{ value: '', label: 'Pick Language', className: styles.select__option, disabled: true }, ...uniqueLanguages.map((lang) => ({ value: lang, label: lang, className: styles.select__option }))];
 
     return (
         <header className={styles.header}>

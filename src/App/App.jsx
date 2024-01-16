@@ -6,43 +6,38 @@ import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
 import { Spinner } from '../components/Spinner/Spinner';
 
-import english from '../data/english.json';
-import german from '../data/german.json';
+import wordsData from '../data/words.json';
 import styles from '../styles/App.module.scss';
-
-const languages = {
-    english,
-    german
-};
 
 function App() {
     const storedLanguage = localStorage.getItem('language');
-    const defaultLanguage = storedLanguage && languages[storedLanguage] ? storedLanguage : 'english';
+    const defaultLanguage = storedLanguage ? storedLanguage : 'english';
 
-    const [words, setWords] = useState(languages[defaultLanguage]);
+    const [allWords, setAllWords] = useState(wordsData);
     const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
 
     useEffect(() => {
-        if (storedLanguage && languages[storedLanguage]) {
-            setWords(languages[storedLanguage]);
-            setSelectedLanguage(storedLanguage);
-        }
+        setSelectedLanguage(storedLanguage);
     }, [storedLanguage]);
 
     const handleLanguageChange = (language) => {
-        if (languages[language]) {
-            setWords(languages[language]);
-            setSelectedLanguage(language);
-            localStorage.setItem('language', language);
-        }
+        setSelectedLanguage(language);
+        localStorage.setItem('language', language);
     };
 
-    const stateWords = { words, setWords };
-    if (!words) {
+    const filteredWords = allWords.filter((word) => word[selectedLanguage]);
+
+    const stateWords = { words: filteredWords, setWords: setAllWords };
+
+    if (!filteredWords.length) {
         return (
             <Router>
                 <div className={styles.App}>
-                    <Header />
+                    <Header
+                        onLanguageChange={handleLanguageChange}
+                        selectedLanguage={selectedLanguage}
+                        allWords={allWords}
+                    />
                     <Spinner />
                     <Footer />
                 </div>
@@ -56,6 +51,7 @@ function App() {
                 <Header
                     onLanguageChange={handleLanguageChange}
                     selectedLanguage={selectedLanguage}
+                    allWords={allWords}
                 />
                 <Routes>
                     <Route
@@ -64,7 +60,12 @@ function App() {
                     />
                     <Route
                         path="/list"
-                        element={<ListPage stateWords={stateWords} />}
+                        element={
+                            <ListPage
+                                stateWords={stateWords}
+                                selectedLanguage={selectedLanguage}
+                            />
+                        }
                     />
                     <Route
                         path="/cards"

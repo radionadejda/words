@@ -1,8 +1,8 @@
 import { Row } from '../../components/Row/Row';
 import styles from '../../styles/ListPage.module.scss';
 
-export const ListPage = ({ stateWords }) => {
-    const heading = { english: 'word', transcription: 'transcription', russian: 'translation', tags: 'tags' };
+export const ListPage = ({ stateWords, selectedLanguage }) => {
+    const heading = { headingTitle: 'word', headingTranscription: 'transcription', headingTranslation: 'translation', headingTags: 'tags' };
 
     return (
         <main className={styles.main}>
@@ -10,11 +10,13 @@ export const ListPage = ({ stateWords }) => {
                 <Row
                     word={heading}
                     isHeading={true}
+                    selectedLanguage={selectedLanguage}
                 />
                 {stateWords.words.map((word, id) => (
                     <Row
                         key={id}
                         word={word}
+                        selectedLanguage={selectedLanguage}
                     />
                 ))}
             </div>

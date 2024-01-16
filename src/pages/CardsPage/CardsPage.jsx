@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useWordById } from '../../hooks/useWordById.js';
 import { Card } from '../../components/Card/Card.jsx';
-// import { FlipCard } from '../../components/FlipCard/FlipCard.jsx';
-// FlipCard looks better but doesn't use state as required.
-// To see also need to change Card into FlipCard in return
 import { Spinner } from '../../components/Spinner/Spinner.jsx';
 import { Button } from '../../components/Button/Button.jsx';
 import styles from '../../styles/CardsPage.module.scss';
@@ -12,7 +9,7 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
     const [currentWordId, setCurrentWordId] = useState('');
     const [learnedWords, setLearnedWords] = useState([]);
     const [restartCounter, setRestartCounter] = useState(false);
-    const [showTranslation, setShowTranslation] = useState(false); // New state for translation visibility
+    const [showTranslation, setShowTranslation] = useState(false);
 
     const wordsCount = stateWords.words.length;
     const learnedWordsKey = `learnedWords_${selectedLanguage}`;
@@ -22,9 +19,10 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
     }
 
     useEffect(() => {
-        setCurrentWordId(stateWords.words[0]?.id || '');
+        const initialWordId = stateWords.words[0]?.id || '';
+        setCurrentWordId(initialWordId);
         setShowTranslation(false);
-    }, [stateWords, restartCounter]);
+    }, [stateWords, restartCounter, selectedLanguage]);
 
     const currentWord = useWordById(stateWords.words, currentWordId);
 
@@ -107,6 +105,7 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
                     showTranslation={showTranslation}
                     setShowTranslation={setShowTranslation}
                     countLearnedWords={() => countLearnedWords()}
+                    selectedLanguage={selectedLanguage}
                 />
                 <button
                     id="nextButton"

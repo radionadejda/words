@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '../Button/Button';
 import styles from './Card.module.scss';
 
-export const Card = ({ word, countLearnedWords, showTranslation, setShowTranslation }) => {
-    const { english, transcription, russian } = word;
-    // const [showTranslation, setShowTranslation] = useState(false);
+export const Card = ({ selectedLanguage, word, countLearnedWords, showTranslation, setShowTranslation }) => {
+    const { transcription, russian } = word;
+    const foreignWord = word[selectedLanguage];
     const [isLearned, setIsLearned] = useState(false);
 
     const toggleTranslation = () => {
@@ -22,7 +22,7 @@ export const Card = ({ word, countLearnedWords, showTranslation, setShowTranslat
 
     return (
         <div className={styles.card}>
-            <h2 className={styles.word}>{english}</h2>
+            <h2 className={styles.word}>{foreignWord}</h2>
             <div className={styles.transcription}>{transcription}</div>
             <Button
                 name={showTranslation ? 'hide' : 'translate'}

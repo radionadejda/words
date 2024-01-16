@@ -15,5 +15,3 @@ export const Spinner = (props) => {
         </main>
     );
 };
-
-//
