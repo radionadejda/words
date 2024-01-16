@@ -25,3 +25,5 @@ dist-ssr
 src/aid
 
 src/styles/rowmixins.scss
+src/data/english.json
+src/data/german.json
