@@ -11,10 +11,12 @@
     text-transform: uppercase;
 }
 
+.row {
+    @include row;
+}
+
 .row_form {
     @include row;
-    background-color: rgba($accent2, 0.2);
-    border: 1px solid $accent2;
 }
 
 .heading {

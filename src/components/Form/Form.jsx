@@ -84,7 +84,7 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
 
     return (
         <div className={styles.form_container}>
-            {/* {formType === 'add' && (
+            {formType === 'add' && (
                 <div className={`${styles.row} ${styles.heading}`}>
                     <h2 className={styles.row_word}>{word.headingTitle}</h2>
                     <div className={styles.row_description}>
@@ -93,7 +93,7 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
                         <div className={styles.row_tags}>{word.headingTags}</div>
                     </div>
                 </div>
-            )} */}
+            )}
             <div className={styles.row_form}>
                 {formType === 'remove' ? (
                     <h2 className={styles.row_word}>{foreignWord}</h2>
