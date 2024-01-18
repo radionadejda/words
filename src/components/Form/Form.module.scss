@@ -1,0 +1,77 @@
+@import '../../styles/vars';
+@import '../../styles/rowmixins.scss';
+
+.form_container {
+    @include row_container;
+    background-color: rgba($accent2, 0.2);
+    border-radius: 0.3rem;
+}
+
+.formTitle {
+    text-transform: uppercase;
+}
+
+.row_form {
+    @include row;
+    background-color: rgba($accent2, 0.2);
+    border: 1px solid $accent2;
+}
+
+.heading {
+    border-radius: 0;
+    border-bottom: 1px solid $accent2;
+    &:hover {
+        background-color: rgba($accent2, 0);
+    }
+}
+
+.row_word {
+    @include row_word;
+}
+
+.row_description {
+    @include row_description;
+}
+
+.row_remove {
+    min-width: 50%;
+}
+
+.row_buttons {
+    @include row_buttons;
+}
+
+.row_transcription {
+    @include transcription;
+}
+
+.row_button {
+    @include row_button;
+    text-wrap: wrap;
+}
+
+.row_input {
+    width: 90%;
+    height: 60%;
+    border-radius: 0.3rem;
+    outline: none;
+    border: 1px solid $accent2;
+    background-color: rgba($accent2, 0.2);
+    padding: 1% 5%;
+
+    @media (max-width: $medium) {
+        height: 100%;
+    }
+}
+
+::placeholder {
+    color: rgba($text, 0.6);
+}
+
+.error {
+    border: 2px solid $error;
+}
+
+.error_message {
+    color: $error;
+}
