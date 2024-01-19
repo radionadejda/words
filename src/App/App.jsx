@@ -1,24 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import { AllWordsAndSelectedLanguageContext } from '../context/AllWordsAndSelectedLanguageContext';
 import { HomePage, CardsPage, ListPage, ErrorPage } from '../pages';
 import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
 import { Spinner } from '../components/Spinner/Spinner';
-
-import wordsData from '../data/words.json';
 import styles from '../styles/App.module.scss';
 
 function App() {
-    const storedLanguage = localStorage.getItem('language');
-    const defaultLanguage = storedLanguage ? storedLanguage : 'english';
-
-    const [allWords, setAllWords] = useState(wordsData);
-    const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
+    const { allWords, setAllWords, selectedLanguage, setSelectedLanguage } = useContext(AllWordsAndSelectedLanguageContext);
 
     useEffect(() => {
-        setSelectedLanguage(storedLanguage);
-    }, [storedLanguage]);
+        setSelectedLanguage(selectedLanguage);
+    }, [selectedLanguage]);
 
     const handleLanguageChange = (language) => {
         setSelectedLanguage(language);
@@ -26,10 +20,9 @@ function App() {
     };
 
     const filteredWords = allWords.filter((word) => word[selectedLanguage]);
-
     const stateWords = { words: filteredWords, setWords: setAllWords };
 
-    if (!filteredWords.length) {
+    if (!allWords.length) {
         return (
             <Router>
                 <div className={styles.App}>
