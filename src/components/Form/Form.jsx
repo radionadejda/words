@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 import { Button } from '../Button/Button';
 import styles from './Form.module.scss';
 
 export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
+    const { words, setWords } = useContext(WordsAndLanguageContext);
     const { id, transcription, russian, tags } = word;
     const foreignWord = word[selectedLanguage];
 
@@ -20,7 +22,7 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
         isTagsValid: true
     });
 
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false); //send to form
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const handleCancel = () => {
         setFormData({
@@ -54,8 +56,9 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
 
     const handleWord = () => {
         if (validateAndSetInputs()) {
+            lastId = words[words.length - 1].id;
             const wordObject = {
-                id: id || 'noid', // generate an ID++ from words.length
+                id: id || lastId + 1,
                 [selectedLanguage]: formData.word,
                 transcription: formData.transcription,
                 russian: formData.translation,

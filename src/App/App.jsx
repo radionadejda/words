@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AllWordsAndSelectedLanguageContext } from '../context/AllWordsAndSelectedLanguageContext';
+import { WordsAndLanguageContext } from '../context/WordsAndLanguageContext';
 import { HomePage, CardsPage, ListPage, ErrorPage } from '../pages';
 import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
@@ -8,29 +8,27 @@ import { Spinner } from '../components/Spinner/Spinner';
 import styles from '../styles/App.module.scss';
 
 function App() {
-    const { allWords, setAllWords, selectedLanguage, setSelectedLanguage } = useContext(AllWordsAndSelectedLanguageContext);
+    const { words, setWords, language, setLanguage } = useContext(WordsAndLanguageContext);
+
+    console.log('im words from APP');
+    console.log(words);
+    console.log('im lang from APP');
+    console.log(language);
 
     useEffect(() => {
-        setSelectedLanguage(selectedLanguage);
-    }, [selectedLanguage]);
+        setLanguage(language);
+    }, [language]);
 
     const handleLanguageChange = (language) => {
-        setSelectedLanguage(language);
+        setLanguage(language);
         localStorage.setItem('language', language);
     };
 
-    const filteredWords = allWords.filter((word) => word[selectedLanguage]);
-    const stateWords = { words: filteredWords, setWords: setAllWords };
-
-    if (!allWords.length) {
+    if (!words.length) {
         return (
             <Router>
                 <div className={styles.App}>
-                    <Header
-                        onLanguageChange={handleLanguageChange}
-                        selectedLanguage={selectedLanguage}
-                        allWords={allWords}
-                    />
+                    <Header onLanguageChange={handleLanguageChange} />
                     <Spinner />
                     <Footer />
                 </div>
@@ -41,11 +39,7 @@ function App() {
     return (
         <Router>
             <div className={styles.App}>
-                <Header
-                    onLanguageChange={handleLanguageChange}
-                    selectedLanguage={selectedLanguage}
-                    allWords={allWords}
-                />
+                <Header onLanguageChange={handleLanguageChange} />
                 <Routes>
                     <Route
                         path="/"
@@ -53,21 +47,11 @@ function App() {
                     />
                     <Route
                         path="/list"
-                        element={
-                            <ListPage
-                                stateWords={stateWords}
-                                selectedLanguage={selectedLanguage}
-                            />
-                        }
+                        element={<ListPage />}
                     />
                     <Route
                         path="/cards"
-                        element={
-                            <CardsPage
-                                stateWords={stateWords}
-                                selectedLanguage={selectedLanguage}
-                            />
-                        }
+                        element={<CardsPage />}
                     />
                     <Route
                         path="*"

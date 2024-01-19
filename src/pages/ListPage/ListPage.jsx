@@ -1,7 +1,10 @@
+import { useContext } from 'react';
+import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 import { Row } from '../../components/Row/Row';
 import styles from '../../styles/ListPage.module.scss';
 
-export const ListPage = ({ stateWords, selectedLanguage }) => {
+export const ListPage = () => {
+    const { words, language } = useContext(WordsAndLanguageContext);
     const heading = { headingTitle: 'word', headingTranscription: 'transcription', headingTranslation: 'translation', headingTags: 'tags' };
 
     return (
@@ -10,13 +13,13 @@ export const ListPage = ({ stateWords, selectedLanguage }) => {
                 <Row
                     word={heading}
                     isHeading={true}
-                    selectedLanguage={selectedLanguage}
+                    selectedLanguage={language}
                 />
-                {stateWords.words.map((word, id) => (
+                {words?.map((word, id) => (
                     <Row
                         key={id}
                         word={word}
-                        selectedLanguage={selectedLanguage}
+                        selectedLanguage={language}
                     />
                 ))}
             </div>

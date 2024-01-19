@@ -1,42 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 import { useWordById } from '../../hooks/useWordById.js';
 import { Card } from '../../components/Card/Card.jsx';
 import { Spinner } from '../../components/Spinner/Spinner.jsx';
 import { Button } from '../../components/Button/Button.jsx';
 import styles from '../../styles/CardsPage.module.scss';
 
-export const CardsPage = ({ stateWords, selectedLanguage }) => {
+export const CardsPage = () => {
+    const { words, language } = useContext(WordsAndLanguageContext);
     const [currentWordId, setCurrentWordId] = useState('');
     const [learnedWords, setLearnedWords] = useState([]);
     const [restartCounter, setRestartCounter] = useState(false);
     const [showTranslation, setShowTranslation] = useState(false);
 
-    const wordsCount = stateWords.words.length;
-    const learnedWordsKey = `learnedWords_${selectedLanguage}`;
+    const wordsCount = words.length;
+    const learnedWordsKey = `learnedWords_${language}`;
 
     if (wordsCount === 0) {
         return <Spinner message="No words available" />;
     }
 
     useEffect(() => {
-        const initialWordId = stateWords.words[0]?.id || '';
+        const initialWordId = words[0]?.id || '';
         setCurrentWordId(initialWordId);
         setShowTranslation(false);
-    }, [stateWords, restartCounter, selectedLanguage]);
+    }, [words, restartCounter, language]);
 
-    const currentWord = useWordById(stateWords.words, currentWordId);
+    const currentWord = useWordById(words, currentWordId);
 
     const goToPreviousCard = () => {
-        const currentIndex = stateWords.words.findIndex((word) => word.id === currentWordId);
+        const currentIndex = words.findIndex((word) => word.id === currentWordId);
         const prevIndex = (currentIndex - 1 + wordsCount) % wordsCount;
-        setCurrentWordId(stateWords.words[prevIndex].id);
+        setCurrentWordId(words[prevIndex].id);
         setShowTranslation(false);
     };
 
     const goToNextCard = () => {
-        const currentIndex = stateWords.words.findIndex((word) => word.id === currentWordId);
+        const currentIndex = words.findIndex((word) => word.id === currentWordId);
         const nextIndex = (currentIndex + 1) % wordsCount;
-        setCurrentWordId(stateWords.words[nextIndex].id);
+        setCurrentWordId(words[nextIndex].id);
         setShowTranslation(false);
     };
 
@@ -105,7 +107,7 @@ export const CardsPage = ({ stateWords, selectedLanguage }) => {
                     showTranslation={showTranslation}
                     setShowTranslation={setShowTranslation}
                     countLearnedWords={() => countLearnedWords()}
-                    selectedLanguage={selectedLanguage}
+                    selectedLanguage={language}
                 />
                 <button
                     id="nextButton"

@@ -1,8 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import styles from './Header.module.scss';
-import { useEffect } from 'react';
+import { useContext } from 'react';
+import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 
-export const Header = ({ onLanguageChange, selectedLanguage, allWords }) => {
+import styles from './Header.module.scss';
+
+export const Header = ({ onLanguageChange }) => {
+    const { words, language } = useContext(WordsAndLanguageContext);
+
     const changeLanguage = (language) => {
         onLanguageChange(language);
     };
@@ -10,7 +14,7 @@ export const Header = ({ onLanguageChange, selectedLanguage, allWords }) => {
     const keysToFilterOut = ['id', 'transcription', 'russian', 'tags', 'tags_json'];
 
     const getUniqueLanguages = () => {
-        const uniqueLanguagesSet = new Set(allWords.flatMap((word) => Object.keys(word).filter((key) => !keysToFilterOut.includes(key))));
+        const uniqueLanguagesSet = new Set(words.flatMap((word) => Object.keys(word).filter((key) => !keysToFilterOut.includes(key))));
 
         return [...uniqueLanguagesSet];
     };
@@ -30,7 +34,7 @@ export const Header = ({ onLanguageChange, selectedLanguage, allWords }) => {
                 <select
                     className={styles.header__select}
                     onChange={(e) => changeLanguage(e.target.value)}
-                    value={selectedLanguage}>
+                    value={language}>
                     {languages.map((lang) => (
                         <option
                             key={lang.value}
