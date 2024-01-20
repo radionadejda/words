@@ -5,23 +5,30 @@ import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 import styles from './Header.module.scss';
 
 export const Header = ({ onLanguageChange }) => {
-    const { words, language } = useContext(WordsAndLanguageContext);
+    const { words, language, setLanguage } = useContext(WordsAndLanguageContext);
 
     const changeLanguage = (language) => {
         onLanguageChange(language);
+        setLanguage(language);
     };
 
-    const keysToFilterOut = ['id', 'transcription', 'russian', 'tags', 'tags_json'];
+    // uncomment to filter unique languages available in API
+    //     const getUniqueLanguages = () => {
+    //         const keysToFilterOut = ['id', 'transcription', 'russian', 'tags', 'tags_json'];
+    // const uniqueLanguagesSet = new Set(words.flatMap((word) => Object.keys(word).filter((key) => !keysToFilterOut.includes(key))));
+    //         return [...uniqueLanguagesSet];
+    //     };
+    //     const uniqueLanguages = getUniqueLanguages();
+    //     const languages = [{ value: '', label: 'Pick Language', className: styles.select__option, disabled: true }, ...uniqueLanguages.map((lang) => ({ value: lang, label: lang, className: styles.select__option }))];
 
-    const getUniqueLanguages = () => {
-        const uniqueLanguagesSet = new Set(words.flatMap((word) => Object.keys(word).filter((key) => !keysToFilterOut.includes(key))));
-
-        return [...uniqueLanguagesSet];
-    };
-
-    const uniqueLanguages = getUniqueLanguages();
-
-    const languages = [{ value: '', label: 'Pick Language', className: styles.select__option, disabled: true }, ...uniqueLanguages.map((lang) => ({ value: lang, label: lang, className: styles.select__option }))];
+    // remove if using languages available in API
+    const languages = [
+        { value: '', label: 'Pick Language', className: styles.select__option, disabled: true },
+        { value: 'english', label: 'english', className: styles.select__option },
+        { value: 'german', label: 'german', className: styles.select__option },
+        { value: 'french', label: 'french', className: styles.select__option },
+        { value: 'spanish', label: 'spanish', className: styles.select__option }
+    ];
 
     return (
         <header className={styles.header}>
