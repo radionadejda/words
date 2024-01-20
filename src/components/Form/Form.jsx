@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
+import { getWords, addWord, editWord, deleteWord } from '../../services';
 import { Button } from '../Button/Button';
 import styles from './Form.module.scss';
 
 export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
-    const { words, setWords } = useContext(WordsAndLanguageContext);
+    const { words, setWords, allWords, setAllWords } = useContext(WordsAndLanguageContext);
     const { id, transcription, russian, tags } = word;
     const foreignWord = word[selectedLanguage];
 
@@ -109,12 +110,12 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
 
     const handleWord = () => {
         if (validateAndSetInputs()) {
-            const lastIdNumber = words.length > 0 ? parseInt(words[words.length - 1].id, 10) : 0;
+            const lastIdNumber = parseInt(allWords[allWords.length - 1].id, 10);
             const newIdNumber = id ? parseInt(id, 10) : lastIdNumber + 1;
             const newIdString = String(newIdNumber);
 
             const wordObject = {
-                id: newIdString,
+                id: id || newIdString,
                 [selectedLanguage]: formData.word.toLowerCase(),
                 transcription: formData.transcription,
                 russian: formData.translation,
@@ -124,18 +125,22 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
 
             switch (formType) {
                 case 'add':
+                    setAllWords((prevWords) => [...prevWords, wordObject]);
                     setWords((prevWords) => [...prevWords, wordObject]);
                     console.log('word added', wordObject);
-                    console.log(words);
+                    addWord(wordObject);
                     break;
                 case 'edit':
                     setWords((prevWords) => prevWords.map((word) => (word.id === id ? { ...wordObject } : word)));
+                    setAllWords((prevWords) => prevWords.map((word) => (word.id === id ? { ...wordObject } : word)));
                     console.log('word edited', wordObject);
-                    console.log(words);
+                    editWord(wordObject);
                     break;
                 case 'remove':
                     setWords((prevWords) => prevWords.filter((word) => word.id !== id));
+                    setAllWords((prevWords) => prevWords.filter((word) => word.id !== id));
                     console.log(`word id ${id} ${foreignWord} removed`);
+                    deleteWord(id);
                     break;
                 default:
                     break;

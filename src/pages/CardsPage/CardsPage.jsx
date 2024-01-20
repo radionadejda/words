@@ -16,10 +16,6 @@ export const CardsPage = () => {
     const wordsCount = words.length;
     const learnedWordsKey = `learnedWords_${language}`;
 
-    if (wordsCount === 0) {
-        return <Spinner message="No words available" />;
-    }
-
     useEffect(() => {
         const initialWordId = words[0]?.id || '';
         setCurrentWordId(initialWordId);

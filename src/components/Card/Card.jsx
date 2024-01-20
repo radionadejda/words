@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 import { Button } from '../Button/Button';
 import styles from './Card.module.scss';
 
 export const Card = ({ selectedLanguage, word, countLearnedWords, showTranslation, setShowTranslation }) => {
+    // const { language, setLanguage } = useContext(WordsAndLanguageContext);
     const { transcription, russian } = word;
     const foreignWord = word[selectedLanguage];
     const [isLearned, setIsLearned] = useState(false);
