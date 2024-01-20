@@ -8,23 +8,58 @@ import { Spinner } from '../components/Spinner/Spinner';
 import styles from '../styles/App.module.scss';
 
 function App() {
-    const { words, setWords, language, setLanguage } = useContext(WordsAndLanguageContext);
+    const { getFilteredWords, words, setWords, language, setLanguage, loading } = useContext(WordsAndLanguageContext);
+    const [noWords, setNoWords] = useState(false);
 
     useEffect(() => {
         setLanguage(language);
-    }, [language]);
+        if (!loading) {
+            const filteredWords = getFilteredWords();
+
+            if (filteredWords.length === 0) {
+                setNoWords(true);
+            } else {
+                setNoWords(false);
+            }
+        }
+    }, [language, loading, words]);
 
     const handleLanguageChange = (language) => {
         setLanguage(language);
         localStorage.setItem('language', language);
     };
 
-    if (!words.length) {
+    if (loading) {
         return (
             <Router>
                 <div className={styles.App}>
                     <Header onLanguageChange={handleLanguageChange} />
                     <Spinner />
+                    <Footer />
+                </div>
+            </Router>
+        );
+    }
+
+    if (noWords) {
+        return (
+            <Router>
+                <div className={styles.App}>
+                    <Header onLanguageChange={handleLanguageChange} />
+                    <ListPage noWords={noWords} />
+                    <Footer />
+                </div>
+            </Router>
+        );
+    }
+
+    if (noWords) {
+        return (
+            <Router>
+                <div className={styles.App}>
+                    <Header onLanguageChange={handleLanguageChange} />
+                    <div className={styles.message}>we don't have words in {language}, but you can add them here</div>
+                    <ListPage addFormOpen={noWords} />
                     <Footer />
                 </div>
             </Router>

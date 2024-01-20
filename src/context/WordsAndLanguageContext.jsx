@@ -12,16 +12,19 @@ export const WordsAndLanguageContextComponent = ({ children }) => {
 
     const [words, setWords] = useState([]); //uncomment to use API
     const [language, setLanguage] = useState(defaultLanguage);
+    const [loading, setLoading] = useState(true);
 
     const getWordsFromApi = async () => {
         //add async here to use API
+        setLoading(true);
         try {
             const newWords = await GetWords(); //uncomment to use API
             // const newWords = data; //remove to use API
-            const filteredWords = newWords.filter((word) => word[language]);
-            setWords(filteredWords);
+            setWords(newWords);
         } catch (error) {
             console.error('Error fetching words:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -29,7 +32,17 @@ export const WordsAndLanguageContextComponent = ({ children }) => {
         getWordsFromApi();
     }, [language]);
 
-    const value = { words, setWords, language, setLanguage };
+    const getFilteredWords = () => {
+        return words.filter((word) => word[language]);
+    };
 
+    const value = {
+        words: getFilteredWords(),
+        setWords,
+        language,
+        setLanguage,
+        loading,
+        getFilteredWords
+    };
     return <WordsAndLanguageContext.Provider value={value}>{children}</WordsAndLanguageContext.Provider>;
 };
