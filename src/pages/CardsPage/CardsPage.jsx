@@ -48,10 +48,12 @@ export const CardsPage = () => {
 
     useEffect(() => {
         const storedLearnedWords = localStorage.getItem(learnedWordsKey);
-        if (storedLearnedWords) {
+        if (words.length === 0) {
+            localStorage.removeItem(learnedWordsKey);
+        } else if (storedLearnedWords) {
             setLearnedWords(JSON.parse(storedLearnedWords));
         }
-    }, [learnedWordsKey]);
+    }, [language, learnedWordsKey, words]);
 
     const handleKeyPress = (event) => {
         if (event.code === 'ArrowLeft') {
@@ -103,7 +105,6 @@ export const CardsPage = () => {
                     showTranslation={showTranslation}
                     setShowTranslation={setShowTranslation}
                     countLearnedWords={() => countLearnedWords()}
-                    selectedLanguage={language}
                 />
                 <button
                     id="nextButton"

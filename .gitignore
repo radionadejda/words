@@ -26,3 +26,4 @@ src/aid
 
 src/data/english.json
 src/data/german.json
+src/services/allServiceFuncs.js

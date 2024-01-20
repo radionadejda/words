@@ -3,10 +3,10 @@ import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 import { Button } from '../Button/Button';
 import styles from './Card.module.scss';
 
-export const Card = ({ selectedLanguage, word, countLearnedWords, showTranslation, setShowTranslation }) => {
-    // const { language, setLanguage } = useContext(WordsAndLanguageContext);
+export const Card = ({ word, countLearnedWords, showTranslation, setShowTranslation }) => {
+    const { language, setLanguage } = useContext(WordsAndLanguageContext);
     const { transcription, russian } = word;
-    const foreignWord = word[selectedLanguage];
+    const foreignWord = word[language];
     const [isLearned, setIsLearned] = useState(false);
 
     const toggleTranslation = () => {
