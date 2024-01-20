@@ -35,19 +35,72 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
     };
 
     const validateAndSetInputs = () => {
+        if (formType === 'remove') {
+            setIsButtonDisabled(false);
+            return true;
+        }
+
+        let isWordUnique = true;
+        if (formType === 'add') {
+            isWordUnique = !words.some((word) => word[selectedLanguage].trim().toLowerCase() === formData.word.trim().toLowerCase());
+        }
+        const isTranslationInRussian = /^[а-яА-ЯёЁ\s,.:;"'-/!?]+$/u.test(formData.translation.trim());
+
         const validations = {
-            isWordValid: formData.word.trim() !== '',
+            isWordValid: formData.word.trim() !== '' && isWordUnique,
             isTranscriptionValid: formData.transcription.trim() !== '',
-            isTranslationValid: formData.translation.trim() !== '',
+            isTranslationValid: formData.translation.trim() !== '' && isTranslationInRussian,
             isTagsValid: formData.tags.trim() !== ''
         };
 
         setInputValidations(validations);
 
-        const areInputsValid = formType === 'remove' || Object.values(validations).every(Boolean);
+        const areInputsValid = Object.values(validations).every(Boolean);
         setIsButtonDisabled(!areInputsValid);
 
         return areInputsValid;
+    };
+
+    const generateErrorMessage = () => {
+        const invalidFields = Object.entries(inputValidations)
+            .filter(([field, isValid]) => !isValid)
+            .map(([field]) => field);
+
+        if (invalidFields.length === 1) {
+            const invalidField = invalidFields[0];
+            switch (invalidField) {
+                case 'isWordValid':
+                    if (formData.word.trim() === '') {
+                        return 'Word cannot be empty. Please enter a word.';
+                    }
+                    return 'Word must be unique. Please choose a different word.';
+                case 'isTranscriptionValid':
+                    return 'Please fill in the transcription field.';
+                case 'isTranslationValid':
+                    if (formData.translation.trim() === '') {
+                        return 'Translation cannot be empty. Please enter a translation.';
+                    } else {
+                        return 'Translation must be in Russian.';
+                    }
+                case 'isTagsValid':
+                    return 'Please fill in the tags field.';
+                default:
+                    return '';
+            }
+        }
+
+        if (invalidFields.includes('isWordValid')) {
+            if (formData.word.trim() === '') {
+                return 'Word cannot be empty. Please enter a word.';
+            }
+            return 'Word must be unique. Please choose a different word.';
+        }
+
+        if (invalidFields.length > 1) {
+            return 'Please fill in all required fields.';
+        }
+
+        return 'Please fill in all required fields.';
     };
 
     useEffect(() => {
@@ -56,10 +109,13 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
 
     const handleWord = () => {
         if (validateAndSetInputs()) {
-            lastId = words[words.length - 1].id;
+            const lastIdNumber = words.length > 0 ? parseInt(words[words.length - 1].id, 10) : 0;
+            const newIdNumber = id ? parseInt(id, 10) : lastIdNumber + 1;
+            const newIdString = String(newIdNumber);
+
             const wordObject = {
-                id: id || lastId + 1,
-                [selectedLanguage]: formData.word,
+                id: newIdString,
+                [selectedLanguage]: formData.word.toLowerCase(),
                 transcription: formData.transcription,
                 russian: formData.translation,
                 tags: formData.tags,
@@ -68,12 +124,17 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
 
             switch (formType) {
                 case 'add':
+                    setWords((prevWords) => [...prevWords, wordObject]);
                     console.log('word added', wordObject);
+                    console.log(words);
                     break;
                 case 'edit':
+                    setWords((prevWords) => prevWords.map((word) => (word.id === id ? { ...wordObject } : word)));
                     console.log('word edited', wordObject);
+                    console.log(words);
                     break;
                 case 'remove':
+                    setWords((prevWords) => prevWords.filter((word) => word.id !== id));
                     console.log(`word id ${id} ${foreignWord} removed`);
                     break;
                 default:
@@ -81,7 +142,7 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
             }
             handleCancel();
         } else {
-            console.error('Please fill in all required fields.');
+            console.error('Please fill in all required fields properly.');
         }
     };
 
@@ -126,7 +187,7 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
                         />
                         <input
                             type="text"
-                            placeholder={`add translation`}
+                            placeholder={`add russian translation`}
                             required
                             name="translationInput"
                             value={formData.translation}
@@ -158,7 +219,9 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
                     />
                 </div>
             </div>
-            {isButtonDisabled && <p className={styles.error_message}>Please fill in all required fields.</p>}
+            {isButtonDisabled && <p className={styles.error_message}>{generateErrorMessage()}</p>}
         </div>
     );
 };
+
+const word = { id: '15836', english: 'Morning', EnglishTranscription: '[ ˈmɔːrnɪŋ ]', spanish: 'mañana', SpanishTranscription: '[ maˈɲaɲa ]', german: 'Morgen', GermanTranscription: '[ ˈmɔːɡ(ə)n ]', russian: 'утро', RussianTranscription: '[ utro ]', french: 'matin', FrenchTranscription: '[ ma.tɛ̃ ]', tags: '', tags_json: '[""]' };
