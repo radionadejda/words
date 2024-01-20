@@ -10,11 +10,6 @@ import styles from '../styles/App.module.scss';
 function App() {
     const { words, setWords, language, setLanguage } = useContext(WordsAndLanguageContext);
 
-    console.log('im words from APP');
-    console.log(words);
-    console.log('im lang from APP');
-    console.log(language);
-
     useEffect(() => {
         setLanguage(language);
     }, [language]);

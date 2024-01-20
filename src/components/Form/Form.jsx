@@ -223,5 +223,3 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
         </div>
     );
 };
-
-const word = { id: '15836', english: 'Morning', EnglishTranscription: '[ ˈmɔːrnɪŋ ]', spanish: 'mañana', SpanishTranscription: '[ maˈɲaɲa ]', german: 'Morgen', GermanTranscription: '[ ˈmɔːɡ(ə)n ]', russian: 'утро', RussianTranscription: '[ utro ]', french: 'matin', FrenchTranscription: '[ ma.tɛ̃ ]', tags: '', tags_json: '[""]' };
