@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
-import { addWord, editWord, deleteWord } from '../../services';
 import { handleWord } from './handleWordFunction';
 import { validateAndSetInputs, generateErrorMessage } from './FormValidationFunctions';
 import { handleCancel } from './handleCancelFunction';
