@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
 import { getWords, addWord, editWord, deleteWord } from '../../services';
+import { isWordUnique, isTranslationInRussian, isTranscriptionValidFormat, validateAndSetInputs, generateErrorMessage } from './FormValidationFunctions';
 import { Button } from '../Button/Button';
 import styles from './Form.module.scss';
 
@@ -35,85 +36,12 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
         setFormType(null);
     };
 
-    const validateAndSetInputs = () => {
-        if (formType === 'remove') {
-            setIsButtonDisabled(false);
-            return true;
-        }
-
-        let isWordUnique = true;
-        if (formType === 'add') {
-            isWordUnique = !words.some((word) => word[selectedLanguage].trim().toLowerCase() === formData.word.trim().toLowerCase());
-        }
-        const isTranslationInRussian = /^[а-яА-ЯёЁ\s,.:;"'-/!?]+$/u.test(formData.translation.trim());
-        const isTranscriptionValidFormat = /^\[(?![а-яА-ЯёЁ])[^\[\]]+\]$/u.test(formData.transcription.trim());
-
-        const validations = {
-            isWordValid: formData.word.trim() !== '' && isWordUnique,
-            isTranscriptionValid: formData.transcription.trim() !== '' && isTranscriptionValidFormat,
-            isTranslationValid: formData.translation.trim() !== '' && isTranslationInRussian,
-            isTagsValid: formData.tags.trim() !== ''
-        };
-
-        setInputValidations(validations);
-
-        const areInputsValid = Object.values(validations).every(Boolean);
-        setIsButtonDisabled(!areInputsValid);
-
-        return areInputsValid;
-    };
-
-    const generateErrorMessage = () => {
-        const invalidFields = Object.entries(inputValidations)
-            .filter(([field, isValid]) => !isValid)
-            .map(([field]) => field);
-
-        if (invalidFields.length === 1) {
-            const invalidField = invalidFields[0];
-            switch (invalidField) {
-                case 'isWordValid':
-                    if (formData.word.trim() === '') {
-                        return 'Word cannot be empty. Please enter a word.';
-                    }
-                    return 'Word must be unique. Please choose a different word.';
-                case 'isTranscriptionValid':
-                    if (formData.transcription.trim() === '') {
-                        return 'Please fill in the transcription field.';
-                    }
-                    return 'Transcription must be in square brackets [] and contain no russian letters';
-                case 'isTranslationValid':
-                    if (formData.translation.trim() === '') {
-                        return 'Translation cannot be empty. Please enter a translation.';
-                    } else {
-                        return 'Translation must be in Russian.';
-                    }
-                case 'isTagsValid':
-                    return 'Please fill in the tags field.';
-                default:
-                    return '';
-            }
-        }
-
-        if (invalidFields.includes('isWordValid')) {
-            if (formData.word.trim() === '') {
-                return 'Word cannot be empty. Please enter a word.';
-            }
-            return 'Word must be unique. Please choose a different word.';
-        }
-
-        if (invalidFields.length > 1) {
-            return 'Please fill in all required fields properly.';
-        }
-
-        return 'Please fill in all required fields properly.';
-    };
-
     useEffect(() => {
-        validateAndSetInputs();
+        validateAndSetInputs(formType, formData, words, selectedLanguage, setInputValidations, setIsButtonDisabled);
     }, [formType, formData]);
 
     const handleWord = () => {
-        if (validateAndSetInputs()) {
+        if (validateAndSetInputs(formType, formData, words, selectedLanguage, setInputValidations, setIsButtonDisabled)) {
             const lastIdNumber = parseInt(allWords[allWords.length - 1].id, 10);
             const newIdNumber = id ? parseInt(id, 10) : lastIdNumber + 1;
             const newIdString = String(newIdNumber);
@@ -228,7 +156,7 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
                     />
                 </div>
             </div>
-            {isButtonDisabled && <p className={styles.error_message}>{generateErrorMessage()}</p>}
+            {isButtonDisabled && <p className={styles.error_message}>{generateErrorMessage(inputValidations, formData)}</p>}
         </div>
     );
 };
