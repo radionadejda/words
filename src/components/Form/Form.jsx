@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import { handleWord } from './handleWordFunction';
+import { validateAndSetInputs, generateErrorMessage } from './FormValidationFunctions';
+import { handleCancel } from './handleCancelFunction';
 import { Button } from '../Button/Button';
 import styles from './Form.module.scss';
 
-export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
+export const Form = ({ words, setWords, allWords, setAllWords, selectedLanguage, word, formType, setFormType }) => {
     const { id, transcription, russian, tags } = word;
     const foreignWord = word[selectedLanguage];
 
@@ -21,66 +24,88 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
     });
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(false); //send to form
-
-    const handleCancel = () => {
-        setFormData({
-            word: foreignWord || '',
-            transcription: transcription || '',
-            translation: russian || '',
-            tags: tags || ''
-        });
-        setFormType(null);
-    };
-
-    const validateAndSetInputs = () => {
-        const validations = {
-            isWordValid: formData.word.trim() !== '',
-            isTranscriptionValid: formData.transcription.trim() !== '',
-            isTranslationValid: formData.translation.trim() !== '',
-            isTagsValid: formData.tags.trim() !== ''
-        };
-
-        setInputValidations(validations);
-
-        const areInputsValid = formType === 'remove' || Object.values(validations).every(Boolean);
-        setIsButtonDisabled(!areInputsValid);
-
-        return areInputsValid;
+    const parameters = {
+        formType,
+        setFormType,
+        formData,
+        setFormData,
+        words,
+        setWords,
+        allWords,
+        setAllWords,
+        selectedLanguage,
+        setInputValidations,
+        setIsButtonDisabled,
+        id,
+        foreignWord,
+        transcription,
+        russian,
+        tags
     };
 
     useEffect(() => {
-        validateAndSetInputs();
+        validateAndSetInputs(parameters);
     }, [formType, formData]);
 
-    const handleWord = () => {
-        if (validateAndSetInputs()) {
-            const wordObject = {
-                id: id || 'noid', // generate an ID++ from words.length
-                [selectedLanguage]: formData.word,
-                transcription: formData.transcription,
-                russian: formData.translation,
-                tags: formData.tags,
-                tags_json: '["' + formData.tags + '"]'
-            };
+    // const handleCancel = () => {
+    //     setFormData({
+    //         word: foreignWord || '',
+    //         transcription: transcription || '',
+    //         translation: russian || '',
+    //         tags: tags || ''
+    //     });
+    //     setFormType(null);
+    // };
 
-            switch (formType) {
-                case 'add':
-                    console.log('word added', wordObject);
-                    break;
-                case 'edit':
-                    console.log('word edited', wordObject);
-                    break;
-                case 'remove':
-                    console.log(`word id ${id} ${foreignWord} removed`);
-                    break;
-                default:
-                    break;
-            }
-            handleCancel();
-        } else {
-            console.error('Please fill in all required fields.');
-        }
-    };
+    // const validateAndSetInputs = () => {
+    //     const validations = {
+    //         isWordValid: formData.word.trim() !== '',
+    //         isTranscriptionValid: formData.transcription.trim() !== '',
+    //         isTranslationValid: formData.translation.trim() !== '',
+    //         isTagsValid: formData.tags.trim() !== ''
+    //     };
+
+    //     setInputValidations(validations);
+
+    //     const areInputsValid = formType === 'remove' || Object.values(validations).every(Boolean);
+    //     setIsButtonDisabled(!areInputsValid);
+
+    //     return areInputsValid;
+    // };
+
+    // useEffect(() => {
+    //     validateAndSetInputs();
+    // }, [formType, formData]);
+
+    // const handleWord = () => {
+    //     if (validateAndSetInputs()) {
+    //         const wordObject = {
+    //             id: id || 'noid', // generate an ID++ from words.length
+    //             [selectedLanguage]: formData.word,
+    //             transcription: formData.transcription,
+    //             russian: formData.translation,
+    //             tags: formData.tags,
+    //             tags_json: '["' + formData.tags + '"]'
+    //         };
+
+    //         switch (formType) {
+    //             case 'add':
+    //                 console.log('word added', wordObject);
+    //                 break;
+    //             case 'edit':
+    //                 console.log('word edited', wordObject);
+    //                 break;
+    //             case 'remove':
+    //                 console.log(`word id ${id} ${foreignWord} removed`);
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //         handleCancel();
+    //     } else {
+    //         console.error('Please fill in all required fields.');
+    //     }
+    // };
 
     return (
         <div className={styles.form_container}>
@@ -146,16 +171,16 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
                         name={formType === 'remove' ? 'remove' : formType === 'add' ? 'add' : 'save edit'}
                         customClass={`${styles.row_button} ${isButtonDisabled ? styles.error : ''}`}
                         disabled={isButtonDisabled}
-                        onClick={handleWord}
+                        onClick={() => handleWord(parameters)}
                     />
                     <Button
                         name="cancel + close"
                         customClass={styles.row_button}
-                        onClick={handleCancel}
+                        onClick={() => handleCancel(parameters)}
                     />
                 </div>
             </div>
-            {isButtonDisabled && <p className={styles.error_message}>Please fill in all required fields.</p>}
+            {isButtonDisabled && <p className={styles.error_message}>{generateErrorMessage(inputValidations, formData)}</p>}
         </div>
     );
 };

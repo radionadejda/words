@@ -3,7 +3,7 @@ import { Button } from '../Button/Button';
 import { Form } from '../Form/Form';
 import styles from './Row.module.scss';
 
-export const Row = ({ selectedLanguage, word, isHeading = false }) => {
+export const Row = ({ words, setWords, allWords, setAllWords, selectedLanguage, word, isHeading = false }) => {
     const { id, transcription, russian, tags } = word;
 
     const foreignWord = word[selectedLanguage];
@@ -26,6 +26,10 @@ export const Row = ({ selectedLanguage, word, isHeading = false }) => {
                     setFormType={setFormType}
                     selectedLanguage={selectedLanguage}
                     word={word}
+                    words={words}
+                    setWords={setWords}
+                    allWords={allWords}
+                    setAllWords={setAllWords}
                 />
             ) : (
                 <div className={`${styles.row} ${isHeading ? styles.heading : ''}`}>

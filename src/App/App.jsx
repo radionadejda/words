@@ -15,19 +15,21 @@ function App() {
 
     const [allWords, setAllWords] = useState(wordsData);
     const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
+    const filteredWords = allWords.filter((word) => word[selectedLanguage]);
+    const [stateWords, setStateWords] = useState(filteredWords);
 
     useEffect(() => {
-        setSelectedLanguage(storedLanguage);
-    }, [storedLanguage]);
-
+        localStorage.setItem('language', selectedLanguage);
+    }, [selectedLanguage]);
+    s;
+    useEffect(() => {
+        const newFilteredWords = allWords.filter((word) => word[selectedLanguage]);
+        setStateWords(newFilteredWords);
+    }, [selectedLanguage, allWords]);
     const handleLanguageChange = (language) => {
         setSelectedLanguage(language);
         localStorage.setItem('language', language);
     };
-
-    const filteredWords = allWords.filter((word) => word[selectedLanguage]);
-
-    const stateWords = { words: filteredWords, setWords: setAllWords };
 
     if (!filteredWords.length) {
         return (
@@ -62,7 +64,10 @@ function App() {
                         path="/list"
                         element={
                             <ListPage
-                                stateWords={stateWords}
+                                words={stateWords}
+                                setWords={setStateWords}
+                                allWords={allWords}
+                                setAllWords={setAllWords}
                                 selectedLanguage={selectedLanguage}
                             />
                         }
