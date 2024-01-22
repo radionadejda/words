@@ -12,16 +12,6 @@ export const Header = ({ onLanguageChange }) => {
         setLanguage(language);
     };
 
-    // uncomment to filter unique languages available in API
-    //     const getUniqueLanguages = () => {
-    //         const keysToFilterOut = ['id', 'transcription', 'russian', 'tags', 'tags_json'];
-    // const uniqueLanguagesSet = new Set(words.flatMap((word) => Object.keys(word).filter((key) => !keysToFilterOut.includes(key))));
-    //         return [...uniqueLanguagesSet];
-    //     };
-    //     const uniqueLanguages = getUniqueLanguages();
-    //     const languages = [{ value: '', label: 'Pick Language', className: styles.select__option, disabled: true }, ...uniqueLanguages.map((lang) => ({ value: lang, label: lang, className: styles.select__option }))];
-
-    // remove if using languages available in API
     const languages = [
         { value: '', label: 'Pick Language', className: styles.select__option, disabled: true },
         { value: 'english', label: 'english', className: styles.select__option },

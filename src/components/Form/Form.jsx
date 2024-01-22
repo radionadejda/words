@@ -46,10 +46,11 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
             isWordUnique = !words.some((word) => word[selectedLanguage].trim().toLowerCase() === formData.word.trim().toLowerCase());
         }
         const isTranslationInRussian = /^[а-яА-ЯёЁ\s,.:;"'-/!?]+$/u.test(formData.translation.trim());
+        const isTranscriptionValidFormat = /^\[(?![а-яА-ЯёЁ])[^\[\]]+\]$/u.test(formData.transcription.trim());
 
         const validations = {
             isWordValid: formData.word.trim() !== '' && isWordUnique,
-            isTranscriptionValid: formData.transcription.trim() !== '',
+            isTranscriptionValid: formData.transcription.trim() !== '' && isTranscriptionValidFormat,
             isTranslationValid: formData.translation.trim() !== '' && isTranslationInRussian,
             isTagsValid: formData.tags.trim() !== ''
         };
@@ -76,7 +77,10 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
                     }
                     return 'Word must be unique. Please choose a different word.';
                 case 'isTranscriptionValid':
-                    return 'Please fill in the transcription field.';
+                    if (formData.transcription.trim() === '') {
+                        return 'Please fill in the transcription field.';
+                    }
+                    return 'Transcription must be in square brackets [] and contain no russian letters';
                 case 'isTranslationValid':
                     if (formData.translation.trim() === '') {
                         return 'Translation cannot be empty. Please enter a translation.';
@@ -98,10 +102,10 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
         }
 
         if (invalidFields.length > 1) {
-            return 'Please fill in all required fields.';
+            return 'Please fill in all required fields properly.';
         }
 
-        return 'Please fill in all required fields.';
+        return 'Please fill in all required fields properly.';
     };
 
     useEffect(() => {
