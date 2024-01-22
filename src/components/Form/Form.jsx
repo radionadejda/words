@@ -1,7 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { WordsAndLanguageContext } from '../../context/WordsAndLanguageContext';
-import { getWords, addWord, editWord, deleteWord } from '../../services';
-import { isWordUnique, isTranslationInRussian, isTranscriptionValidFormat, validateAndSetInputs, generateErrorMessage } from './FormValidationFunctions';
+import { addWord, editWord, deleteWord } from '../../services';
+import { handleWord } from './handleWordFunction';
+import { validateAndSetInputs, generateErrorMessage } from './FormValidationFunctions';
+import { handleCancel } from './handleCancelFunction';
 import { Button } from '../Button/Button';
 import styles from './Form.module.scss';
 
@@ -26,62 +28,28 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-    const handleCancel = () => {
-        setFormData({
-            word: foreignWord || '',
-            transcription: transcription || '',
-            translation: russian || '',
-            tags: tags || ''
-        });
-        setFormType(null);
+    const parameters = {
+        formType,
+        setFormType,
+        formData,
+        setFormData,
+        words,
+        setWords,
+        allWords,
+        setAllWords,
+        selectedLanguage,
+        setInputValidations,
+        setIsButtonDisabled,
+        id,
+        foreignWord,
+        transcription,
+        russian,
+        tags
     };
 
     useEffect(() => {
-        validateAndSetInputs(formType, formData, words, selectedLanguage, setInputValidations, setIsButtonDisabled);
+        validateAndSetInputs(parameters);
     }, [formType, formData]);
-
-    const handleWord = () => {
-        if (validateAndSetInputs(formType, formData, words, selectedLanguage, setInputValidations, setIsButtonDisabled)) {
-            const lastIdNumber = parseInt(allWords[allWords.length - 1].id, 10);
-            const newIdNumber = id ? parseInt(id, 10) : lastIdNumber + 1;
-            const newIdString = String(newIdNumber);
-
-            const wordObject = {
-                id: id || newIdString,
-                [selectedLanguage]: formData.word.toLowerCase(),
-                transcription: formData.transcription,
-                russian: formData.translation,
-                tags: formData.tags,
-                tags_json: '["' + formData.tags + '"]'
-            };
-
-            switch (formType) {
-                case 'add':
-                    setAllWords((prevWords) => [...prevWords, wordObject]);
-                    setWords((prevWords) => [...prevWords, wordObject]);
-                    console.log('word added', wordObject);
-                    addWord(wordObject);
-                    break;
-                case 'edit':
-                    setWords((prevWords) => prevWords.map((word) => (word.id === id ? { ...wordObject } : word)));
-                    setAllWords((prevWords) => prevWords.map((word) => (word.id === id ? { ...wordObject } : word)));
-                    console.log('word edited', wordObject);
-                    editWord(wordObject);
-                    break;
-                case 'remove':
-                    setWords((prevWords) => prevWords.filter((word) => word.id !== id));
-                    setAllWords((prevWords) => prevWords.filter((word) => word.id !== id));
-                    console.log(`word id ${id} ${foreignWord} removed`);
-                    deleteWord(id);
-                    break;
-                default:
-                    break;
-            }
-            handleCancel();
-        } else {
-            console.error('Please fill in all required fields properly.');
-        }
-    };
 
     return (
         <div className={styles.form_container}>
@@ -147,12 +115,12 @@ export const Form = ({ selectedLanguage, word, formType, setFormType }) => {
                         name={formType === 'remove' ? 'remove' : formType === 'add' ? 'add' : 'save edit'}
                         customClass={`${styles.row_button} ${isButtonDisabled ? styles.error : ''}`}
                         disabled={isButtonDisabled}
-                        onClick={handleWord}
+                        onClick={() => handleWord(parameters)}
                     />
                     <Button
                         name="cancel + close"
                         customClass={styles.row_button}
-                        onClick={handleCancel}
+                        onClick={() => handleCancel(parameters)}
                     />
                 </div>
             </div>

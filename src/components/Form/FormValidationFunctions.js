@@ -10,7 +10,8 @@ export const isTranscriptionValidFormat = transcription => {
     return /^\[(?![а-яА-ЯёЁ])[^\[\]]+\]$/u.test(transcription.trim());
 };
 
-export const validateAndSetInputs = (formType, formData, words, selectedLanguage, setInputValidations, setIsButtonDisabled) => {
+export const validateAndSetInputs = parameters => {
+    const { formType, formData, words, selectedLanguage, setInputValidations, setIsButtonDisabled } = parameters;
     if (formType === 'remove') {
         setIsButtonDisabled(false);
         return true;

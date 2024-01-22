@@ -29,10 +29,6 @@ export const WordsAndLanguageContextComponent = ({ children }) => {
         getWordsFromApi();
     }, []);
 
-    useEffect(() => {
-        console.log('Updated allWords:', allWords);
-    }, [allWords]);
-
     const getFilteredWords = () => {
         return words.filter((word) => word[language]);
     };
