@@ -2,10 +2,11 @@ import { addWord, editWord, deleteWord } from '../../services';
 import { validateAndSetInputs } from './FormValidationFunctions';
 import { handleCancel } from './handleCancelFunction';
 
-export const handleWord = parameters => {
-    const { formType, formData, setWords, allWords, setAllWords, selectedLanguage, id } = parameters;
+export const handleWord = async parameters => {
+    const { formType, formData, wordsStore, id } = parameters;
+    const selectedLanguage = wordsStore.language;
     if (validateAndSetInputs(parameters)) {
-        const lastIdNumber = parseInt(allWords[allWords.length - 1].id, 10);
+        const lastIdNumber = parseInt(wordsStore.words[wordsStore.words.length - 1].id, 10);
         const newIdNumber = id ? parseInt(id, 10) : lastIdNumber + 1;
         const newIdString = String(newIdNumber);
 
@@ -20,24 +21,19 @@ export const handleWord = parameters => {
 
         switch (formType) {
             case 'add':
-                setAllWords(prevWords => [...prevWords, wordObject]);
-                setWords(prevWords => [...prevWords, wordObject]);
-                addWord(wordObject);
+                await addWord(wordObject);
                 break;
             case 'edit':
-                setWords(prevWords => prevWords.map(word => (word.id === id ? { ...wordObject } : word)));
-                setAllWords(prevWords => prevWords.map(word => (word.id === id ? { ...wordObject } : word)));
-                editWord(wordObject);
+                await editWord(wordObject);
                 break;
             case 'remove':
-                setWords(prevWords => prevWords.filter(word => word.id !== id));
-                setAllWords(prevWords => prevWords.filter(word => word.id !== id));
-                deleteWord(id);
+                await deleteWord(id);
                 break;
             default:
                 break;
         }
         handleCancel(parameters);
+        await wordsStore.getWordsFromApi();
     } else {
         console.error('Please fill in all required fields properly.');
     }

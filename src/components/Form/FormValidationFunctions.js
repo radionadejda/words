@@ -11,7 +11,8 @@ export const isTranscriptionValidFormat = transcription => {
 };
 
 export const validateAndSetInputs = parameters => {
-    const { formType, formData, words, selectedLanguage, setInputValidations, setIsButtonDisabled } = parameters;
+    const { formType, formData, wordsStore, selectedLanguage, setInputValidations, setIsButtonDisabled } = parameters;
+    const words = wordsStore.words;
     if (formType === 'remove') {
         setIsButtonDisabled(false);
         return true;
