@@ -47,7 +47,8 @@ const App = inject('wordsStore')(
                 <Router>
                     <div className={styles.App}>
                         <Header onLanguageChange={handleLanguageChange} />
-                        <ListPage noWords={noWords} />
+                        {/* <ListPage noWords={noWords} /> */}
+                        <Spinner message="we don't have words in this language" />
                         <Footer />
                     </div>
                 </Router>
